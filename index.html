@@ -12,1393 +12,831 @@
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Majak Anyar — L&D & CX Operations Manager</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<meta name="description" content="Majak Anyar — Delivery Manager · CX Operations · BPO Governance. Fortune 500 BPO environments across EMEA and LATAM.">
+<title>Majak Anyar — Delivery Manager · CX Operations</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 <style>
-:root {
-  --cream: #F5F0E8;
-  --warm-white: #FAF7F2;
-  --terracotta: #C4622D;
-  --terracotta-light: #D4744A;
-  --deep-brown: #2C1810;
-  --mid-brown: #5C3D2E;
-  --sand: #D4B896;
-  --sand-light: #E8D5BC;
-  --text-body: #3D2B1F;
-  --text-muted: #7A5C4A;
-  --charcoal: #1A1008;
+:root{
+  --cr:#FAF7F2;
+  --wh:#FFFFFF;
+  --es:#2C1810;
+  --tc:#C4622D;
+  --tl:#D4744A;
+  --ta:rgba(196,98,45,.07);
+  --br:#5C3D2E;
+  --sd:#E8D5BC;
+  --mu:#7A5C4A;
+  --tx:#1C1C1C;
+  --ok:#2F7D5A;
+  --sf:'Cormorant Garamond',Georgia,serif;
+  --ss:'Inter',system-ui,sans-serif;
 }
-
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  background: var(--warm-white);
-  color: var(--text-body);
-  font-family: 'DM Sans', sans-serif;
-  font-weight: 300;
-  overflow-x: hidden;
-  cursor: none;
-}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--cr);color:var(--tx);font-family:var(--ss);font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased;cursor:none;}
 
 /* CURSOR */
-.cursor {
-  width: 10px; height: 10px;
-  background: var(--terracotta);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%,-50%);
-  transition: transform 0.1s ease;
-}
-.cursor-ring {
-  width: 34px; height: 34px;
-  border: 1px solid var(--terracotta);
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transform: translate(-50%,-50%);
-  opacity: 0.4;
-  transition: all 0.35s cubic-bezier(0.23,1,0.32,1);
-}
+#cur{width:8px;height:8px;background:var(--tc);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s ease;}
+#curR{width:28px;height:28px;border:1.5px solid var(--tc);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.25;transition:all .3s cubic-bezier(.23,1,.32,1);}
+
+/* BACK TO TOP */
+#btt{position:fixed;bottom:24px;right:24px;width:36px;height:36px;background:var(--tc);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:none;opacity:0;pointer-events:none;transition:opacity .3s;z-index:200;border:none;box-shadow:0 2px 12px rgba(196,98,45,.3);}
+#btt.show{opacity:1;pointer-events:all;}
+#btt svg{width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;}
 
 /* NAV */
-nav {
-  position: fixed; top:0; left:0; right:0; z-index:100;
-  padding: 22px 64px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: rgba(250,247,242,0.88);
-  backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(196,98,45,0.1);
-}
-.nav-logo {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 21px; font-weight: 600;
-  color: var(--deep-brown); letter-spacing: 0.02em;
-}
-.nav-logo span { color: var(--terracotta); }
-.nav-links { display:flex; gap:40px; list-style:none; }
-.nav-links a {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px; letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-muted); text-decoration:none;
-  transition: color 0.25s;
-}
-.nav-links a:hover { color: var(--terracotta); }
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(232,213,188,.6);}
+.nav-in{max-width:1280px;margin:0 auto;padding:0 56px;display:flex;justify-content:space-between;align-items:center;height:54px;}
+.nav-logo{font-family:var(--sf);font-size:19px;font-weight:700;color:var(--es);text-decoration:none;letter-spacing:.01em;}
+.nav-logo span{color:var(--tc);}
+.nav-links{display:flex;gap:32px;list-style:none;align-items:center;}
+.nav-links a{font-size:12px;font-weight:500;color:var(--mu);text-decoration:none;letter-spacing:.04em;transition:color .2s;position:relative;padding-bottom:3px;}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:var(--tc);transition:width .25s;}
+.nav-links a.active,
+.nav-links a:hover{color:var(--tc);}
+.nav-links a.active::after,.nav-links a:hover::after{width:100%;}
+.nav-cta{background:var(--tc)!important;color:#fff!important;padding:8px 20px;font-size:11px!important;font-weight:600!important;letter-spacing:.08em;text-transform:uppercase;border-radius:0;}
+.nav-cta::after{display:none!important;}
+.nav-cta:hover{background:var(--tl)!important;}
 
 /* HERO */
-.hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-}
-.hero-left {
-  background: var(--deep-brown);
-  display: flex; flex-direction: column;
-  justify-content: flex-end;
-  padding: 130px 64px 88px;
-  position: relative; overflow: hidden;
-}
-.hero-left::before {
-  content:'';
-  position:absolute; top:-80px; left:-80px;
-  width:480px; height:480px;
-  background: radial-gradient(circle, rgba(196,98,45,0.13) 0%, transparent 70%);
-  pointer-events:none;
-}
-.hero-left::after {
-  content:'MA';
-  position:absolute; top:48px; right:32px;
-  font-family:'Cormorant Garamond',serif;
-  font-size:200px; font-weight:700;
-  color:rgba(255,255,255,0.025);
-  line-height:1; pointer-events:none;
-}
-.hero-tag {
-  font-family:'DM Mono',monospace;
-  font-size:10px; letter-spacing:0.2em;
-  text-transform:uppercase; color:var(--terracotta-light);
-  margin-bottom:22px;
-  opacity:0; animation: fadeUp 0.7s ease forwards 0.2s;
-}
-.hero-name {
-  font-family:'Cormorant Garamond',serif;
-  font-size: clamp(54px,6vw,88px);
-  font-weight:300; line-height:1.0;
-  color:var(--cream);
-  opacity:0; animation: fadeUp 0.7s ease forwards 0.4s;
-}
-.hero-name strong {
-  display:block; font-weight:700;
-  color:#fff; font-style:italic;
-}
-.hero-tagline {
-  font-family:'Cormorant Garamond',serif;
-  font-size:21px; font-weight:300; font-style:italic;
-  color:var(--sand); margin-top:18px; margin-bottom:16px;
-  line-height:1.5;
-  opacity:0; animation: fadeUp 0.7s ease forwards 0.6s;
-}
-.hero-proof {
-  font-family:'DM Mono',monospace;
-  font-size:11px; letter-spacing:0.08em;
-  color:var(--terracotta-light);
-  margin-bottom:44px;
-  opacity:0; animation: fadeUp 0.7s ease forwards 0.7s;
-}
-.hero-cta {
-  display:inline-flex; align-items:center; gap:12px;
-  background:var(--terracotta); color:#fff;
-  padding:15px 30px; text-decoration:none;
-  font-family:'DM Mono',monospace;
-  font-size:10px; letter-spacing:0.14em;
-  text-transform:uppercase;
-  transition:all 0.3s ease; width:fit-content;
-  opacity:0; animation: fadeUp 0.7s ease forwards 0.9s;
-}
-.hero-cta:hover { background:var(--terracotta-light); gap:20px; }
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 480px;padding-top:54px;}
 
-.hero-right {
-  background:var(--cream);
-  display:flex; flex-direction:column;
-  justify-content:center;
-  padding:130px 64px 88px;
-  position:relative;
-}
-.hero-right::after {
-  content:'';
-  position:absolute; bottom:0; right:0;
-  width:280px; height:280px;
-  background: radial-gradient(circle at bottom right, rgba(196,98,45,0.07) 0%, transparent 70%);
-}
-.hero-details {
-  display:flex; flex-direction:column; gap:18px;
-  opacity:0; animation: fadeUp 0.7s ease forwards 0.7s;
-}
-.hero-detail {
-  display:flex; align-items:flex-start; gap:14px;
-  font-size:14px; color:var(--text-muted); line-height:1.5;
-}
-.hero-detail-dot {
-  width:6px; height:6px; border-radius:50%;
-  background:var(--terracotta); flex-shrink:0; margin-top:6px;
-}
-.hero-detail strong { color:var(--deep-brown); font-weight:500; }
+/* LEFT */
+.hero-l{background:var(--wh);padding:72px 56px 72px 80px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--sd);}
+.h-eyebrow{display:flex;align-items:center;gap:0;margin-bottom:26px;opacity:0;animation:fu .5s ease forwards .1s;}
+.h-ey-item{font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--tc);}
+.h-ey-sep{width:1px;height:10px;background:var(--sd);margin:0 14px;}
+.h1{font-family:var(--sf);font-size:clamp(40px,4.5vw,66px);font-weight:700;color:var(--es);line-height:1.04;opacity:0;animation:fu .5s ease forwards .2s;}
+.h1 em{font-style:italic;color:var(--tc);}
+.h-rule{width:36px;height:2px;background:var(--tc);margin:20px 0 22px;opacity:0;animation:fu .5s ease forwards .3s;}
+.h-sub{font-size:14px;font-weight:300;color:var(--br);line-height:1.75;max-width:440px;margin-bottom:32px;opacity:0;animation:fu .5s ease forwards .4s;}
+.h-ctas{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:36px;opacity:0;animation:fu .5s ease forwards .5s;}
+.btn-p{display:inline-flex;align-items:center;gap:9px;background:var(--tc);color:#fff;padding:12px 22px;font-size:11px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;text-decoration:none;transition:all .22s;}
+.btn-p:hover{background:var(--tl);}
+.btn-o{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--es);padding:11px 18px;font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;border:1px solid var(--sd);transition:all .22s;}
+.btn-o:hover{border-color:var(--tc);color:var(--tc);}
+.h-chips{display:flex;gap:24px;flex-wrap:wrap;opacity:0;animation:fu .5s ease forwards .6s;}
+.chip{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--mu);}
+.chip-icon{width:15px;height:15px;stroke:var(--tc);fill:none;stroke-width:1.5;opacity:.65;flex-shrink:0;}
+.chip strong{color:var(--es);font-weight:500;font-size:11px;}
 
-/* PROOF STRIP */
-.proof-strip {
-  background: var(--deep-brown);
-  display:grid; grid-template-columns:repeat(4,1fr);
-  border-top: 1px solid rgba(255,255,255,0.04);
-}
-.proof-item {
-  padding:48px 40px;
-  border-right:1px solid rgba(255,255,255,0.05);
-  transition: background 0.3s;
-  position:relative; overflow:hidden;
-}
-.proof-item:last-child { border-right:none; }
-.proof-item::before {
-  content:'';
-  position:absolute; bottom:0; left:0;
-  width:100%; height:2px;
-  background:var(--terracotta);
-  transform:scaleX(0); transform-origin:left;
-  transition:transform 0.35s ease;
-}
-.proof-item:hover::before { transform:scaleX(1); }
-.proof-item:hover { background:rgba(196,98,45,0.07); }
-.proof-number {
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(40px,4vw,60px);
-  font-weight:700; color:#fff; line-height:1;
-  margin-bottom:8px;
-}
-.proof-number span { color:var(--terracotta-light); font-size:0.55em; }
-.proof-label {
-  font-size:13px; color:var(--sand); line-height:1.5; margin-bottom:8px;
-}
-.proof-sub {
-  font-family:'DM Mono',monospace;
-  font-size:9px; letter-spacing:0.1em;
-  text-transform:uppercase; color:var(--text-muted);
-}
+/* RIGHT floating card zone */
+.hero-r{background:var(--cr);padding:56px 40px;display:flex;flex-direction:column;gap:14px;justify-content:center;}
 
-/* SECTION BASE */
-.section { padding:110px 64px; }
-.section-label {
-  font-family:'DM Mono',monospace;
-  font-size:10px; letter-spacing:0.2em;
-  text-transform:uppercase; color:var(--terracotta);
-  margin-bottom:18px;
-  display:flex; align-items:center; gap:14px;
-}
-.section-label::after {
-  content:''; height:1px; width:48px;
-  background:var(--terracotta); opacity:0.4;
-}
-.section-title {
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(34px,4vw,52px);
-  font-weight:300; line-height:1.15;
-  color:var(--deep-brown); margin-bottom:56px;
-}
-.section-title em { font-style:italic; color:var(--terracotta); }
+/* METRICS CARD */
+.mcard{background:var(--wh);border:1px solid var(--sd);}
+.mcard-hd{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);padding:11px 16px;border-bottom:1px solid var(--sd);}
+.metrics-row{display:grid;grid-template-columns:repeat(5,1fr);}
+.m-cell{padding:18px 14px 16px;position:relative;}
+.m-cell+.m-cell{border-left:1px solid var(--sd);}
+.m-num{font-family:var(--sf);font-size:26px;font-weight:700;color:var(--tc);line-height:1;margin-bottom:5px;min-height:32px;}
+.m-lbl{font-size:11px;font-weight:600;color:var(--es);margin-bottom:3px;line-height:1.25;}
+.m-sub{font-size:10px;color:var(--mu);line-height:1.4;}
+
+/* INDUSTRIES CARD */
+.icard{background:var(--wh);border:1px solid var(--sd);}
+.icard-hd{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);padding:11px 16px;border-bottom:1px solid var(--sd);}
+.ind-row{display:grid;grid-template-columns:repeat(6,1fr);}
+.ind-item{padding:14px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;transition:background .18s;}
+.ind-item+.ind-item{border-left:1px solid var(--sd);}
+.ind-item:hover{background:var(--cr);}
+.ind-svg{width:20px;height:20px;stroke:var(--mu);fill:none;stroke-width:1.5;opacity:.55;transition:opacity .18s;}
+.ind-item:hover .ind-svg{opacity:.9;stroke:var(--tc);}
+.ind-nm{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);}
+
+/* SHARED SECTION STYLES */
+.sec{padding:72px 0;}
+.sec-in{max-width:1280px;margin:0 auto;padding:0 80px;}
+.eye{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--tc);margin-bottom:10px;display:flex;align-items:center;gap:12px;}
+.eye::after{content:'';height:1px;width:28px;background:var(--tc);opacity:.3;}
+.sec-h{font-family:var(--sf);font-size:clamp(26px,3vw,40px);font-weight:700;color:var(--es);line-height:1.12;margin-bottom:44px;}
+.div{height:1px;background:var(--sd);}
 
 /* CASE STUDIES */
-.case-studies { background:var(--warm-white); }
+.cs-sec{background:var(--cr);}
+.cs-list{display:flex;flex-direction:column;gap:2px;}
+.cs-card{background:var(--wh);border:1px solid var(--sd);overflow:hidden;transition:border-color .2s;}
+.cs-card:hover{border-color:rgba(196,98,45,.3);}
+.cs-top{display:grid;grid-template-columns:48px 1fr 148px;cursor:pointer;}
+.cs-n-col{display:flex;align-items:flex-start;justify-content:center;padding:22px 0;border-right:1px solid var(--sd);}
+.cs-n{font-family:var(--sf);font-size:24px;font-weight:700;color:var(--sd);transition:color .2s;}
+.cs-card.open .cs-n{color:var(--tc);}
+.cs-body{padding:20px 22px;}
+.cs-tags{display:flex;gap:6px;margin-bottom:6px;flex-wrap:wrap;}
+.cs-tag{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 8px;background:var(--ta);color:var(--tc);}
+.cs-tag-s{background:rgba(92,61,46,.06);color:var(--mu);}
+.cs-title{font-family:var(--sf);font-size:18px;font-weight:700;color:var(--es);margin-bottom:5px;line-height:1.2;}
+.cs-hook{font-size:12px;color:var(--mu);line-height:1.6;max-width:560px;}
+.cs-kpi-col{padding:20px 16px;border-left:1px solid var(--sd);display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;}
+.cs-kpis{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+.kv{font-family:var(--sf);font-size:19px;font-weight:700;color:var(--tc);line-height:1;}
+.kl{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);}
+.cs-more{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);}
+.cs-arr{transition:transform .3s;}
+.cs-card.open .cs-arr{transform:rotate(180deg);}
 
-.cs-grid {
-  display:flex; flex-direction:column; gap:4px;
-}
+/* CHARTS always visible */
+.cs-charts{padding:0 22px 18px;background:var(--cr);}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.cc{background:var(--wh);border:1px solid var(--sd);padding:14px 14px 11px;}
+.cc-lbl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;}
+.cc-ins{font-size:11px;font-weight:500;color:var(--es);margin-bottom:8px;line-height:1.4;}
+.cc canvas{max-height:120px;}
 
-.cs-item {
-  border:1px solid rgba(196,98,45,0.12);
-  overflow:hidden;
-  transition: border-color 0.3s;
-}
-.cs-item:hover { border-color:rgba(196,98,45,0.3); }
+/* ANALYSIS TOGGLE */
+.cs-at{display:flex;align-items:center;justify-content:space-between;padding:10px 22px;background:rgba(196,98,45,.03);border-top:1px solid var(--sd);cursor:pointer;transition:background .18s;}
+.cs-at:hover{background:rgba(196,98,45,.06);}
+.cs-at-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--tc);}
+.cs-at-sub{font-size:11px;color:var(--mu);margin-left:10px;}
+.cs-at-arr{font-size:10px;color:var(--tc);transition:transform .3s;}
+.cs-card.open .cs-at-arr{transform:rotate(180deg);}
+.cs-panel{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.23,1,.32,1);}
+.cs-card.open .cs-panel{max-height:3000px;}
+.cs-pi{padding:28px 22px;background:var(--wh);border-top:1px solid var(--sd);}
 
-.cs-header {
-  display:flex; align-items:center;
-  justify-content:space-between;
-  padding:28px 36px;
-  cursor:pointer;
-  background:var(--warm-white);
-  transition:background 0.25s;
-}
-.cs-header:hover { background:rgba(196,98,45,0.03); }
+/* TABS */
+.tabs{display:flex;gap:1px;background:var(--sd);margin-bottom:22px;flex-wrap:wrap;}
+.tab{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:7px 13px;background:var(--cr);border:none;color:var(--mu);cursor:none;transition:all .18s;}
+.tab.on{background:var(--tc);color:#fff;}
+.tab:hover:not(.on){color:var(--tc);}
+.tp{display:none;}.tp.on{display:block;}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+.sl{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--tc);margin-bottom:8px;padding-bottom:6px;border-bottom:2px solid var(--tc);}
+.st{font-size:12px;color:var(--mu);line-height:1.75;}
+.rb{background:var(--cr);border:1px solid var(--sd);padding:16px;margin-bottom:10px;}
+.rb-t{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--tc);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--sd);}
+.wr{display:flex;gap:9px;padding:7px 0;border-bottom:1px solid var(--sd);}
+.wr:last-child{border-bottom:none;}
+.wn{font-size:9px;font-weight:700;color:var(--tc);width:16px;flex-shrink:0;padding-top:1px;}
+.wq{font-size:10px;color:var(--mu);margin-bottom:2px;}
+.wa{font-size:11px;color:var(--tx);line-height:1.5;}
+.root-b{display:inline-block;background:var(--tc);color:#fff;font-size:8px;font-weight:700;letter-spacing:.1em;padding:2px 6px;margin-top:3px;}
+.cbg{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cb-s{padding:14px;}
+.cb-s.c{background:rgba(92,61,46,.04);border-left:2px solid var(--sd);}
+.cb-s.b{background:rgba(47,125,90,.04);border-left:2px solid var(--ok);}
+.cb-lbl{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);margin-bottom:8px;}
+.cb-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid var(--sd);font-size:11px;color:var(--tx);gap:8px;}
+.cb-row:last-child{border-bottom:none;}
+.cb-v{font-weight:600;white-space:nowrap;}
+.cb-vd{margin-top:8px;padding:8px 10px;background:var(--ta);font-size:11px;color:var(--tc);line-height:1.5;}
+.cl{display:flex;flex-direction:column;}
+.cr{display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-bottom:1px solid var(--sd);font-size:11px;color:var(--tx);line-height:1.5;}
+.cr:last-child{border-bottom:none;}
+.cdot{width:12px;height:12px;border-radius:50%;background:var(--tc);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;}
+.cdot svg{width:6px;height:6px;}
+.cph{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);margin-left:auto;white-space:nowrap;padding-left:8px;}
 
-.cs-header-left { display:flex; align-items:center; gap:24px; }
-
-.cs-number {
-  font-family:'DM Mono',monospace;
-  font-size:10px; letter-spacing:0.12em;
-  color:var(--terracotta); opacity:0.6;
-  width:24px; flex-shrink:0;
-}
-.cs-industry {
-  font-family:'DM Mono',monospace;
-  font-size:9px; letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--terracotta);
-  background:rgba(196,98,45,0.08);
-  padding:5px 12px;
-}
-.cs-title {
-  font-family:'Cormorant Garamond',serif;
-  font-size:22px; font-weight:600;
-  color:var(--deep-brown);
-}
-
-.cs-toggle {
-  font-family:'DM Mono',monospace;
-  font-size:9px; letter-spacing:0.12em;
-  text-transform:uppercase; color:var(--text-muted);
-  display:flex; align-items:center; gap:8px;
-  flex-shrink:0;
-}
-.cs-toggle-arrow {
-  width:20px; height:20px;
-  border:1px solid rgba(196,98,45,0.3);
-  border-radius:50%;
-  display:flex; align-items:center; justify-content:center;
-  font-size:10px; color:var(--terracotta);
-  transition:transform 0.35s ease, background 0.25s;
-}
-.cs-item.open .cs-toggle-arrow {
-  transform:rotate(180deg);
-  background:var(--terracotta); color:#fff;
-  border-color:var(--terracotta);
-}
-
-/* WHR CARDS - always visible */
-.cs-cards {
-  display:grid; grid-template-columns:repeat(3,1fr);
-  gap:2px;
-  background:rgba(196,98,45,0.08);
-  border-top:1px solid rgba(196,98,45,0.1);
-}
-.cs-card {
-  background:var(--warm-white);
-  padding:32px 28px;
-  position:relative;
-}
-.cs-card-label {
-  font-family:'DM Mono',monospace;
-  font-size:9px; letter-spacing:0.18em;
-  text-transform:uppercase; color:var(--terracotta);
-  margin-bottom:14px;
-  display:flex; align-items:center; gap:8px;
-}
-.cs-card-label::after {
-  content:''; flex:1; height:1px;
-  background:rgba(196,98,45,0.2);
-}
-.cs-card-text {
-  font-size:13px; line-height:1.65;
-  color:var(--text-body);
-}
-.cs-card.result .cs-card-text {
-  font-family:'Cormorant Garamond',serif;
-  font-size:16px; font-weight:600;
-  color:var(--deep-brown); line-height:1.5;
-}
-.cs-card-tools {
-  margin-top:16px; display:flex; flex-wrap:wrap; gap:6px;
-}
-.cs-card-tool {
-  font-family:'DM Mono',monospace;
-  font-size:8px; letter-spacing:0.1em;
-  text-transform:uppercase; color:var(--text-muted);
-  background:rgba(196,98,45,0.06);
-  padding:4px 10px;
-}
-
-/* EXPANDED STORY */
-.cs-expanded {
-  max-height:0; overflow:hidden;
-  transition: max-height 0.5s cubic-bezier(0.23,1,0.32,1);
-  background:var(--cream);
-  border-top:none;
-}
-.cs-item.open .cs-expanded {
-  max-height:800px;
-  border-top:1px solid rgba(196,98,45,0.1);
-}
-.cs-expanded-inner {
-  padding:44px 36px;
-  display:grid; grid-template-columns:1fr 1fr 1fr;
-  gap:48px;
-}
-.cs-story-block {}
-.cs-story-label {
-  font-family:'DM Mono',monospace;
-  font-size:9px; letter-spacing:0.2em;
-  text-transform:uppercase; color:var(--terracotta);
-  margin-bottom:14px; padding-bottom:10px;
-  border-bottom:1px solid rgba(196,98,45,0.2);
-}
-.cs-story-text {
-  font-size:13px; line-height:1.75;
-  color:var(--text-muted);
-}
-.cs-story-text p { margin-bottom:12px; }
-.cs-story-text p:last-child { margin-bottom:0; }
-
-/* READ MORE TOGGLE ROW */
-.cs-read-more-row {
-  padding:14px 36px;
-  background:var(--cream);
-  border-top:1px solid rgba(196,98,45,0.08);
-  display:flex; justify-content:flex-end;
-}
-.cs-read-btn {
-  font-family:'DM Mono',monospace;
-  font-size:9px; letter-spacing:0.14em;
-  text-transform:uppercase; color:var(--terracotta);
-  background:none; border:none; cursor:none;
-  display:flex; align-items:center; gap:8px;
-  transition:gap 0.25s;
-  padding:8px 0;
-}
-.cs-read-btn:hover { gap:14px; }
-.cs-item.open .cs-read-btn-text::before { content:'Collapse story '; }
-.cs-read-btn-text::before { content:'Read full story '; }
+/* AREAS OF EXPERTISE */
+.exp-sec{background:var(--wh);}
+.aoe-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border:1px solid var(--sd);}
+.aoe-item{padding:24px 22px;transition:background .18s;position:relative;}
+.aoe-item:hover{background:var(--cr);}
+.aoe-item::after{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:var(--tc);transition:width .3s;}
+.aoe-item:hover::after{width:100%;}
+.aoe-item:nth-child(n+4){border-top:1px solid var(--sd);}
+.aoe-item:not(:nth-child(3n)){border-right:1px solid var(--sd);}
+.aoe-n{font-size:9px;font-weight:700;letter-spacing:.18em;color:var(--tc);opacity:.4;margin-bottom:9px;}
+.aoe-t{font-size:14px;font-weight:600;color:var(--es);margin-bottom:5px;line-height:1.2;}
+.aoe-d{font-size:11px;color:var(--mu);line-height:1.65;}
 
 /* ABOUT */
-.about {
-  background:var(--cream);
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:80px; align-items:start;
-}
-.about-lead {
-  font-family:'Cormorant Garamond',serif;
-  font-size:22px; font-weight:300; line-height:1.7;
-  color:var(--text-body); margin-bottom:24px;
-}
-.about-lead strong { font-weight:600; color:var(--deep-brown); }
-.about-body {
-  font-size:14px; line-height:1.85;
-  color:var(--text-muted); margin-bottom:36px;
-}
-.about-tags { display:flex; flex-wrap:wrap; gap:8px; }
-.about-tag {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--terracotta); border:1px solid rgba(196,98,45,0.25);
-  padding:7px 14px; transition:all 0.25s;
-}
-.about-tag:hover { background:var(--terracotta); color:#fff; }
+.about-sec{background:var(--cr);}
+.about-g{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:start;}
+.a-lead{font-family:var(--sf);font-size:19px;font-weight:600;color:var(--es);line-height:1.6;margin-bottom:14px;}
+.a-body{font-size:13px;color:var(--mu);line-height:1.85;margin-bottom:22px;}
+.a-tags{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--sd);}
+.a-tag{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);padding:6px 11px;border-right:1px solid var(--sd);border-bottom:1px solid var(--sd);transition:all .18s;}
+.a-tag:hover{background:var(--tc);color:#fff;border-color:var(--tc);}
+.a-card{border:1px solid var(--sd);background:var(--wh);}
+.a-row{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--sd);}
+.a-row:last-child{border-bottom:none;}
+.a-key{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);flex-shrink:0;padding-top:2px;}
+.a-val{font-size:12px;color:var(--es);text-align:right;line-height:1.5;}
 
-.about-card {
-  background:var(--deep-brown); padding:44px;
-  position:relative; overflow:hidden;
-}
-.about-card::before {
-  content:''; position:absolute; top:-40px; right:-40px;
-  width:200px; height:200px;
-  background:radial-gradient(circle, rgba(196,98,45,0.18) 0%, transparent 70%);
-}
-.about-row {
-  display:flex; justify-content:space-between;
-  align-items:flex-start; padding:18px 0;
-  border-bottom:1px solid rgba(255,255,255,0.06);
-  position:relative; z-index:1;
-}
-.about-row:last-child { border-bottom:none; }
-.about-row-key {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--sand); opacity:0.55;
-  flex-shrink:0; padding-top:2px;
-}
-.about-row-val {
-  font-size:13px; color:var(--cream);
-  text-align:right; line-height:1.5;
-}
-.status-open { color:#7DCC8A; font-weight:500; }
-
-/* EXPERIENCE */
-.experience { background:var(--warm-white); }
-.timeline { max-width:860px; position:relative; }
-.timeline::before {
-  content:''; position:absolute;
-  left:0; top:8px; bottom:0; width:1px;
-  background:linear-gradient(to bottom, var(--terracotta), rgba(196,98,45,0.05));
-}
-.tl-item {
-  padding-left:44px; padding-bottom:60px;
-  position:relative; opacity:0;
-  transform:translateY(18px);
-  transition:all 0.6s ease;
-}
-.tl-item.visible { opacity:1; transform:translateY(0); }
-.tl-dot {
-  position:absolute; left:-5px; top:7px;
-  width:11px; height:11px; border-radius:50%;
-  background:var(--terracotta);
-  border:2px solid var(--warm-white);
-}
-.tl-date {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.16em; text-transform:uppercase;
-  color:var(--terracotta); margin-bottom:10px;
-}
-.tl-title {
-  font-family:'Cormorant Garamond',serif;
-  font-size:26px; font-weight:600;
-  color:var(--deep-brown); margin-bottom:3px;
-}
-.tl-company {
-  font-size:13px; color:var(--text-muted);
-  margin-bottom:18px; font-weight:400;
-}
-.tl-achievements { display:flex; flex-direction:column; gap:9px; }
-.tl-ach {
-  display:flex; gap:13px; align-items:flex-start;
-  font-size:13px; line-height:1.65; color:var(--text-body);
-}
-.tl-ach-marker {
-  font-family:'DM Mono',monospace; font-size:9px;
-  color:var(--terracotta); flex-shrink:0; margin-top:4px;
-}
-.tl-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:16px; }
-.tl-tag {
-  font-family:'DM Mono',monospace; font-size:8px;
-  letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--text-muted); background:rgba(196,98,45,0.07);
-  padding:4px 11px;
-}
-.tl-advisory {
-  background:rgba(196,98,45,0.04);
-  border-left:2px solid var(--terracotta);
-  padding-left:16px;
-}
+/* EXPERIENCE / TIMELINE */
+.tl-sec{background:var(--wh);}
+.tl{max-width:760px;position:relative;}
+.tl::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(to bottom,var(--tc),rgba(196,98,45,.04));}
+.tl-i{padding-left:24px;padding-bottom:36px;position:relative;opacity:0;transform:translateY(12px);transition:all .5s ease;}
+.tl-i.vis{opacity:1;transform:translateY(0);}
+.tl-dot{position:absolute;left:-4px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--tc);border:2px solid var(--wh);}
+.tl-date{font-size:9px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--tc);margin-bottom:5px;}
+.tl-title{font-family:var(--sf);font-size:19px;font-weight:700;color:var(--es);margin-bottom:2px;}
+.tl-co{font-size:11px;color:var(--mu);margin-bottom:10px;}
+.tl-a{display:flex;gap:7px;align-items:flex-start;font-size:12px;color:var(--mu);line-height:1.6;margin-bottom:5px;}
+.tl-d{width:3px;height:3px;border-radius:50%;background:var(--tc);flex-shrink:0;margin-top:7px;}
+.tl-cred{font-size:10px;color:rgba(122,92,74,.55);letter-spacing:.03em;margin-top:9px;}
+.tl-cred span{margin:0 6px;opacity:.5;}
 
 /* SKILLS */
-.skills-section {
-  background:var(--cream);
-  display:grid; grid-template-columns:1fr 1fr; gap:80px;
-}
-.skill-group { margin-bottom:44px; }
-.skill-group-label {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.18em; text-transform:uppercase;
-  color:var(--terracotta); margin-bottom:20px;
-  padding-bottom:10px;
-  border-bottom:1px solid rgba(196,98,45,0.18);
-}
-.skill-row {
-  display:flex; justify-content:space-between;
-  align-items:center; padding:12px 0;
-  border-bottom:1px solid rgba(92,61,46,0.07);
-  transition:padding-left 0.25s;
-}
-.skill-row:hover { padding-left:6px; }
-.skill-name { font-size:13px; color:var(--text-body); }
-.skill-bar {
-  width:110px; height:1px;
-  background:rgba(196,98,45,0.15);
-}
-.skill-fill {
-  height:100%; background:var(--terracotta);
-  width:0; transition:width 1.3s cubic-bezier(0.23,1,0.32,1);
-}
-
-.tools-label {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.18em; text-transform:uppercase;
-  color:var(--terracotta); margin-bottom:20px;
-  padding-bottom:10px;
-  border-bottom:1px solid rgba(196,98,45,0.18);
-}
-.tools-grid {
-  display:grid; grid-template-columns:repeat(3,1fr);
-  gap:2px; background:rgba(196,98,45,0.08); margin-bottom:32px;
-}
-.tool-cell {
-  background:var(--cream); padding:18px 14px;
-  text-align:center; transition:background 0.25s;
-  cursor:default;
-}
-.tool-cell:hover { background:var(--terracotta); }
-.tool-cell:hover .tool-cell-name { color:#fff; }
-.tool-cell-name {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.08em; text-transform:uppercase;
-  color:var(--text-muted); transition:color 0.25s;
-}
-
-.lang-list { display:flex; flex-direction:column; gap:14px; }
-.lang-row { display:flex; align-items:center; gap:16px; }
-.lang-name-l { font-size:13px; color:var(--text-body); width:72px; flex-shrink:0; }
-.lang-level-l {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.1em; text-transform:uppercase;
-  color:var(--text-muted); width:52px; flex-shrink:0;
-}
-.lang-dots-l { display:flex; gap:5px; }
-.ld { width:7px; height:7px; border-radius:50%; background:rgba(196,98,45,0.15); }
-.ld.on { background:var(--terracotta); }
-.ld.half { background:var(--terracotta); opacity:0.4; }
+.sk-sec{background:var(--cr);}
+.sk-g{display:grid;grid-template-columns:1fr 1fr;gap:56px;}
+.sg-l{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--tc);margin-bottom:12px;padding-bottom:6px;border-bottom:1px solid var(--sd);}
+.sk-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--sd);}
+.sk-row:last-child{border-bottom:none;}
+.sk-nm{font-size:12px;color:var(--tx);}
+.sk-bar{width:64px;height:1px;background:var(--sd);}
+.sk-fill{height:100%;background:var(--tc);width:0;transition:width 1.1s cubic-bezier(.23,1,.32,1);}
+.tools-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sd);margin-bottom:1px;}
+.tc-cell{background:var(--wh);padding:10px 7px;text-align:center;font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);transition:all .18s;}
+.tc-cell:hover{background:var(--tc);color:#fff;}
+.lang-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--sd);gap:10px;}
+.lang-row:last-child{border-bottom:none;}
+.lang-nm{font-size:12px;color:var(--tx);width:54px;flex-shrink:0;}
+.lang-pr{font-size:11px;color:var(--mu);}
+.lang-dots{display:flex;gap:3px;margin-left:auto;}
+.ld{width:5px;height:5px;border-radius:50%;background:var(--sd);}
+.ld.on{background:var(--tc);}
+.ld.h{background:var(--tc);opacity:.4;}
 
 /* CONTACT */
-.contact-section {
-  background:var(--deep-brown);
-  display:grid; grid-template-columns:1fr 1fr;
-  gap:80px; align-items:center;
-  position:relative; overflow:hidden;
-  padding:110px 64px;
-}
-.contact-section::before {
-  content:''; position:absolute;
-  top:0; right:0; width:360px; height:360px;
-  background:radial-gradient(circle at top right, rgba(196,98,45,0.1) 0%, transparent 60%);
-  pointer-events:none;
-}
-.contact-section .section-label { color:var(--sand); }
-.contact-section .section-label::after { background:var(--sand); }
-.contact-section .section-title { color:var(--cream); margin-bottom:24px; }
-.contact-section .section-title em { color:var(--terracotta-light); }
-.contact-sub {
-  font-family:'Cormorant Garamond',serif;
-  font-size:19px; font-weight:300; font-style:italic;
-  color:var(--sand); line-height:1.65;
-}
+.con-sec{background:var(--es);padding:72px 0;}
+.con-in{max-width:1280px;margin:0 auto;padding:0 80px;}
+.con-g{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+.con-name{font-family:var(--sf);font-size:clamp(32px,4vw,52px);font-weight:700;color:var(--cr);line-height:1.05;margin-bottom:6px;}
+.con-title{font-size:12px;color:rgba(250,247,242,.4);margin-bottom:24px;font-weight:300;letter-spacing:.04em;}
+.con-links{display:flex;flex-direction:column;gap:1px;}
+.con-link{display:flex;align-items:center;gap:14px;padding:14px 16px;text-decoration:none;background:rgba(255,255,255,.03);transition:all .2s;position:relative;overflow:hidden;}
+.con-link::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--tc);transition:width .22s;z-index:0;}
+.con-link:hover::before{width:100%;}
+.con-link>*{position:relative;z-index:1;}
+.con-link:hover .cl-t,.con-link:hover .cl-v{color:#fff;}
+.cl-t{font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(196,98,45,.6);width:56px;flex-shrink:0;transition:color .2s;}
+.cl-v{font-size:12px;color:rgba(250,247,242,.45);transition:color .2s;}
 
-.contact-links { display:flex; flex-direction:column; gap:3px; }
-.contact-link {
-  display:flex; align-items:center; gap:20px;
-  padding:22px 26px;
-  border:1px solid rgba(255,255,255,0.06);
-  text-decoration:none; position:relative; overflow:hidden;
-  transition:border-color 0.3s;
-}
-.contact-link::before {
-  content:''; position:absolute;
-  left:0; top:0; bottom:0; width:0;
-  background:var(--terracotta); transition:width 0.3s ease; z-index:0;
-}
-.contact-link:hover { border-color:var(--terracotta); }
-.contact-link:hover::before { width:100%; }
-.contact-link > * { position:relative; z-index:1; }
-.contact-link:hover .cl-type,
-.contact-link:hover .cl-val { color:#fff; }
-.cl-type {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--terracotta-light); width:76px; flex-shrink:0;
-  transition:color 0.3s;
-}
-.cl-val {
-  font-size:13px; color:var(--cream);
-  transition:color 0.3s; font-weight:400;
-}
+footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:14px 80px;display:flex;justify-content:space-between;align-items:center;}
+.f-n{font-family:var(--sf);font-size:13px;color:rgba(250,247,242,.16);}
+.f-s{font-size:10px;color:rgba(250,247,242,.1);letter-spacing:.07em;}
 
-/* FOOTER */
-footer {
-  background:var(--charcoal);
-  padding:28px 64px;
-  display:flex; justify-content:space-between; align-items:center;
-}
-.footer-name {
-  font-family:'Cormorant Garamond',serif;
-  font-size:17px; color:rgba(255,255,255,0.35); font-weight:300;
-}
-.footer-note {
-  font-family:'DM Mono',monospace; font-size:9px;
-  letter-spacing:0.12em; text-transform:uppercase;
-  color:rgba(255,255,255,0.18);
-}
+@keyframes fu{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.rev{opacity:0;transform:translateY(12px);transition:all .55s cubic-bezier(.23,1,.32,1);}
+.rev.vis{opacity:1;transform:translateY(0);}
+::-webkit-scrollbar{width:2px;}::-webkit-scrollbar-track{background:var(--cr);}::-webkit-scrollbar-thumb{background:var(--tc);}
 
-/* DIVIDER */
-.divider { height:1px; background:linear-gradient(to right, var(--terracotta), rgba(196,98,45,0.05)); }
-
-/* ANIMATIONS */
-@keyframes fadeUp {
-  from { opacity:0; transform:translateY(22px); }
-  to { opacity:1; transform:translateY(0); }
-}
-.reveal {
-  opacity:0; transform:translateY(24px);
-  transition:all 0.75s cubic-bezier(0.23,1,0.32,1);
-}
-.reveal.visible { opacity:1; transform:translateY(0); }
-
-::-webkit-scrollbar { width:3px; }
-::-webkit-scrollbar-track { background:var(--warm-white); }
-::-webkit-scrollbar-thumb { background:var(--terracotta); }
-
-@media(max-width:900px){
-  nav { padding:18px 24px; }
-  .nav-links { display:none; }
-  .hero, .about, .skills-section, .contact-section { grid-template-columns:1fr; }
-  .hero-left,.hero-right { padding:100px 24px 60px; }
-  .section { padding:72px 24px; }
-  .proof-strip { grid-template-columns:repeat(2,1fr); }
-  .cs-cards { grid-template-columns:1fr; }
-  .cs-expanded-inner { grid-template-columns:1fr; gap:28px; }
-  footer { padding:22px 24px; flex-direction:column; gap:10px; text-align:center; }
+@media(max-width:1024px){
+  .hero{grid-template-columns:1fr;}
+  .hero-l{padding:88px 24px 52px;border-right:none;border-bottom:1px solid var(--sd);}
+  .hero-r{padding:36px 24px;}
+  .metrics-row{grid-template-columns:repeat(3,1fr);}
+  .m-cell:nth-child(4),.m-cell:nth-child(5){border-top:1px solid var(--sd);}
+  .ind-row{grid-template-columns:repeat(3,1fr);}
+  .ind-item:nth-child(4){border-top:1px solid var(--sd);}
+  .about-g,.con-g,.sk-g{grid-template-columns:1fr;}
+  .aoe-grid{grid-template-columns:1fr 1fr;}
+  .aoe-item:nth-child(n+3){border-top:1px solid var(--sd);}
+  .aoe-item:not(:nth-child(2n)){border-right:1px solid var(--sd);}
+  .cs-top{grid-template-columns:40px 1fr;}
+  .cs-kpi-col{display:none;}
+  .sg,.cbg{grid-template-columns:1fr;}
+  .sec-in,.cs-in,.con-in{padding-left:24px;padding-right:24px;}
+  footer{padding:14px 24px;flex-direction:column;gap:7px;}
 }
 </style>
 </head>
 <body>
+<div id="cur"></div>
+<div id="curR"></div>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <svg viewBox="0 0 13 13"><polyline points="2,9 6.5,4 11,9"/></svg>
+</button>
 
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="curR"></div>
-
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">Majak <span>Anyar</span></div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#cases">Case Studies</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-in">
+    <a href="#top" class="nav-logo">Majak <span>Anyar</span></a>
+    <ul class="nav-links">
+      <li><a href="#cases" data-s="cases">Case Studies</a></li>
+      <li><a href="#aoe" data-s="aoe">Expertise</a></li>
+      <li><a href="#tl" data-s="tl">Experience</a></li>
+      <li><a href="#about" data-s="about">About</a></li>
+      <li><a href="#contact" class="nav-cta" data-s="contact">Contact</a></li>
+    </ul>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero" id="top">
-  <div class="hero-left">
-    <div class="hero-tag">L&D Manager · CX Operations · Rotterdam</div>
-    <h1 class="hero-name">
-      Majak
-      <strong>Anyar</strong>
-    </h1>
-    <p class="hero-tagline">I shorten learning curves.<br>Performance follows.</p>
-    <p class="hero-proof">42% faster speed to proficiency · 2,300+ hours delivered · 1,500+ agents trained</p>
-    <a href="#contact" class="hero-cta">Open to Opportunities →</a>
+  <div class="hero-l">
+    <div class="h-eyebrow">
+      <span class="h-ey-item">Delivery Management</span>
+      <div class="h-ey-sep"></div>
+      <span class="h-ey-item">CX Operations</span>
+      <div class="h-ey-sep"></div>
+      <span class="h-ey-item">BPO Governance</span>
+    </div>
+    <h1 class="h1">Driving operational<br>performance.<br><em>Delivering measurable impact.</em></h1>
+    <div class="h-rule"></div>
+    <p class="h-sub">Four years managing Fortune 500 BPO delivery across EMEA and LATAM. Six documented case studies with full data, root cause analysis, and measurable business outcomes.</p>
+    <div class="h-ctas">
+      <a href="#cases" class="btn-p">View Case Studies &rarr;</a>
+      <a href="https://linkedin.com/in/majak2" target="_blank" class="btn-o">LinkedIn &#8599;</a>
+      <a href="#contact" class="btn-o">Contact</a>
+    </div>
+    <div class="h-chips">
+      <div class="chip">
+        <svg class="chip-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><polyline points="12,7 12,12 15,15"/></svg>
+        <span><strong>4 Years</strong> &middot; BPO Operations</span>
+      </div>
+      <div class="chip">
+        <svg class="chip-icon" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+        <span><strong>Rotterdam,</strong> Netherlands</span>
+      </div>
+      <div class="chip">
+        <svg class="chip-icon" viewBox="0 0 24 24"><path d="M12 2L4 6v6c0 5.5 3.8 10.7 8 12 4.2-1.3 8-6.5 8-12V6L12 2z"/><polyline points="9,12 11,14 15,10"/></svg>
+        <span><strong>Netherlands</strong> &middot; Work Authorised</span>
+      </div>
+      <div class="chip">
+        <svg class="chip-icon" viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        <span><strong>Arabic &middot; English &middot; Dutch</strong></span>
+      </div>
+    </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-details">
-      <div class="hero-detail">
-        <div class="hero-detail-dot"></div>
-        <div><strong>Role:</strong> L&D Manager / Training Manager</div>
+
+  <div class="hero-r">
+    <div class="mcard rev">
+      <div class="mcard-hd">Key Performance Outcomes</div>
+      <div class="metrics-row">
+        <div class="m-cell">
+          <div class="m-num" data-target="2300" data-suffix="+">0</div>
+          <div class="m-lbl">Training Hours</div>
+          <div class="m-sub">6 languages &middot; 10+ markets</div>
+        </div>
+        <div class="m-cell">
+          <div class="m-num" data-target="40" data-suffix="%">0</div>
+          <div class="m-lbl">Cost Reduction</div>
+          <div class="m-sub">Classroom-to-digital transformation</div>
+        </div>
+        <div class="m-cell">
+          <div class="m-num" data-static="6&rarr;3.5wk" style="font-size:20px;">6&rarr;3.5<sup style="font-size:.52em">wk</sup></div>
+          <div class="m-lbl">Speed to Proficiency</div>
+          <div class="m-sub">42% faster &middot; 4 cohorts</div>
+        </div>
+        <div class="m-cell">
+          <div class="m-num" data-target="13" data-prefix="+">0</div>
+          <div class="m-lbl">Sales Growth %</div>
+          <div class="m-sub">Single quarter &middot; Telecom</div>
+        </div>
+        <div class="m-cell">
+          <div class="m-num" data-target="6">0</div>
+          <div class="m-lbl">Case Studies</div>
+          <div class="m-sub">Data &middot; RCA &middot; Business impact</div>
+        </div>
       </div>
-      <div class="hero-detail">
-        <div class="hero-detail-dot"></div>
-        <div><strong>Background:</strong> 4 years inside Fortune 500 BPO environments — EMEA & LATAM</div>
-      </div>
-      <div class="hero-detail">
-        <div class="hero-detail-dot"></div>
-        <div><strong>Education:</strong> Executive MBA, Erasmus University Rotterdam (Jul 2026)</div>
-      </div>
-      <div class="hero-detail">
-        <div class="hero-detail-dot"></div>
-        <div><strong>Certification:</strong> COPC Lean Six Sigma Yellow Belt</div>
-      </div>
-      <div class="hero-detail">
-        <div class="hero-detail-dot"></div>
-        <div><strong>Industries:</strong> Telecom · Logistics · Healthcare · Tech · Media · E-commerce</div>
-      </div>
-      <div class="hero-detail">
-        <div class="hero-detail-dot"></div>
-        <div><strong>Work Rights:</strong> Full NL eligibility · No sponsorship required</div>
+    </div>
+
+    <div class="icard rev">
+      <div class="icard-hd">Experience Across Industries</div>
+      <div class="ind-row">
+        <div class="ind-item">
+          <svg class="ind-svg" viewBox="0 0 24 24"><path d="M4.93 4.93a10 10 0 000 14.14M19.07 4.93a10 10 0 010 14.14M8.46 8.46a5 5 0 000 7.07M15.54 8.46a5 5 0 010 7.07M12 12h.01"/><line x1="12" y1="12" x2="12" y2="21"/></svg>
+          <div class="ind-nm">Telecom</div>
+        </div>
+        <div class="ind-item">
+          <svg class="ind-svg" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          <div class="ind-nm">Consumer Tech</div>
+        </div>
+        <div class="ind-item">
+          <svg class="ind-svg" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+          <div class="ind-nm">E-Commerce</div>
+        </div>
+        <div class="ind-item">
+          <svg class="ind-svg" viewBox="0 0 24 24"><polyline points="22,12 18,12 15,21 9,3 6,12 2,12"/></svg>
+          <div class="ind-nm">Healthcare</div>
+        </div>
+        <div class="ind-item">
+          <svg class="ind-svg" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16,8 20,8 23,11 23,16 16,16 16,8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          <div class="ind-nm">Logistics</div>
+        </div>
+        <div class="ind-item">
+          <svg class="ind-svg" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="10,8 16,12 10,16"/></svg>
+          <div class="ind-nm">Media</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
-
-<!-- PROOF STRIP -->
-<div class="proof-strip">
-  <div class="proof-item reveal">
-    <div class="proof-number">6<span>→3.5wk</span></div>
-    <div class="proof-label">Speed to Proficiency</div>
-    <div class="proof-sub">42% faster new hire ramp</div>
-  </div>
-  <div class="proof-item reveal">
-    <div class="proof-number">2300<span>+</span></div>
-    <div class="proof-label">Training Hours Delivered</div>
-    <div class="proof-sub">Fortune 500 · 6 languages</div>
-  </div>
-  <div class="proof-item reveal">
-    <div class="proof-number">40<span>%</span></div>
-    <div class="proof-label">Training Cost Reduction</div>
-    <div class="proof-sub">Classroom → digital transformation</div>
-  </div>
-  <div class="proof-item reveal">
-    <div class="proof-number">+10<span>pp</span></div>
-    <div class="proof-label">Sales Conversion Lift</div>
-    <div class="proof-sub">Through targeted upskilling</div>
-  </div>
-</div>
-
-<div class="divider"></div>
-
+<div class="div"></div>
 <!-- CASE STUDIES -->
-<section class="section case-studies" id="cases">
-  <div class="section-label">Case Studies</div>
-  <h2 class="section-title reveal">How results<br><em>actually happened</em></h2>
+<section class="sec cs-sec" id="cases">
+  <div class="sec-in cs-in">
+    <div class="eye rev">Case Studies</div>
+    <div class="sec-h rev">Six engagements.<br>Full documentation.</div>
+    <div class="cs-list">
 
-  <div class="cs-grid">
+      <!-- CS1 -->
+      <div class="cs-card" id="cs1">
+        <div class="cs-top" onclick="tP('cs1')">
+          <div class="cs-n-col"><div class="cs-n">01</div></div>
+          <div class="cs-body">
+            <div class="cs-tags"><span class="cs-tag">US Telecommunications</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; EMEA</span></div>
+            <div class="cs-title">Sales Training Redesign &mdash; Telecommunications Account</div>
+            <div class="cs-hook">Agents knew the product but couldn't convert on live calls. Conversion flat, AHT inflated, client escalating. Rebuilt around real QA failure data &mdash; conversion +10%, sales +13% in a single quarter.</div>
+          </div>
+          <div class="cs-kpi-col">
+            <div class="cs-kpis"><div><div class="kv">+10%</div><div class="kl">Conversion</div></div><div><div class="kv">+13%</div><div class="kl">Sales</div></div><div><div class="kv">&minus;50s</div><div class="kl">AHT</div></div></div>
+            <div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div>
+          </div>
+        </div>
+        <div class="cs-charts">
+          <div class="cg">
+            <div class="cc"><div class="cc-lbl">Sales Performance Index &mdash; Before vs After</div><div class="cc-ins">All three metrics improved after launch. Conversion led the recovery.</div><canvas id="c1a"></canvas></div>
+            <div class="cc"><div class="cc-lbl">Average Handle Time &mdash; Weekly Trend (seconds)</div><div class="cc-ins">AHT dropped consistently post-launch. Structured framework replaced improvisation.</div><canvas id="c1b"></canvas></div>
+          </div>
+        </div>
+        <div class="cs-at" onclick="tA('cs1')">
+          <div style="display:flex;align-items:center;">
+            <div class="cs-at-lbl">Full Analysis</div>
+            <div class="cs-at-sub">&mdash; root cause &middot; story &middot; cost/benefit &middot; intervention log</div>
+          </div>
+          <div class="cs-at-arr">&darr;</div>
+        </div>
+        <div class="cs-panel">
+          <div class="cs-pi">
+            <div class="tabs"><button class="tab on" onclick="swT('cs1','story')">Story</button><button class="tab" onclick="swT('cs1','rca')">5 Whys</button><button class="tab" onclick="swT('cs1','cb')">Cost vs Benefit</button><button class="tab" onclick="swT('cs1','log')">Intervention Log</button></div>
+            <div class="tp on" id="cs1-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">Agents could recite the full product catalogue but couldn't close. Conversion stagnant. Call time running long because agents were improvising through objections without a structural framework. The client had been tracking the numbers for two quarters. Pressure was building.</div></div><div><div class="sl">Approach</div><div class="st">Programme rebuilt around real call behaviour &mdash; objection patterns extracted from QA data, not hypothetical scenarios. Storyline simulations tied directly to CRM workflows replaced passive content delivery. Daily coaching cadence during nesting reinforced trained behaviours before they had time to decay.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">Sales conversion increased 10% within the quarter. Overall sales grew 13%. Call time dropped 50 seconds. Client extended scope. Programme became the account standard. A 3-week redesign investment produced measurable commercial returns within one quarter.</div></div></div></div>
+            <div class="tp" id="cs1-rca"><div class="rb"><div class="rb-t">5 Whys &mdash; Why were agents failing to convert on live calls?</div><div class="wr"><span class="wn">W1</span><div><div class="wq">Why was conversion flat despite product knowledge?</div><div class="wa">Agents weren't guiding customers toward a decision &mdash; calls ended without a close attempt. No framework for doing so.</div></div></div><div class="wr"><span class="wn">W2</span><div><div class="wq">Why didn't agents have a conversation framework?</div><div class="wa">Training focused entirely on product knowledge. How to navigate a live sales call was never designed into the programme.</div></div></div><div class="wr"><span class="wn">W3</span><div><div class="wq">Why was the programme only covering product knowledge?</div><div class="wa">Curriculum built around what the business wanted to teach, not what agents needed to do on the floor.</div></div></div><div class="wr"><span class="wn">W4</span><div><div class="wq">Why wasn't the curriculum mapped to floor performance?</div><div class="wa">QA data showing where agents were failing had never been fed back into training design.</div></div></div><div class="wr"><span class="wn">W5</span><div><div class="wq">Why wasn't QA data used in training design?</div><div class="wa">L&amp;D and QA operated in separate silos. No shared review process. Nobody owned the connection between the two.<div class="root-b">Root Cause</div></div></div></div></div></div>
+            <div class="tp" id="cs1-cb"><div class="rb"><div class="rb-t">Cost vs Benefit</div><div class="cbg"><div class="cb-s c"><div class="cb-lbl">Investment</div><div class="cb-row"><span>Programme redesign</span><span class="cb-v">~3 weeks</span></div><div class="cb-row"><span>Articulate 360 licences</span><span class="cb-v">~&euro;800/yr</span></div><div class="cb-row"><span>Nesting coaching overhead</span><span class="cb-v">~15hrs/month</span></div><div class="cb-row"><span>QA data analysis</span><span class="cb-v">~1 week</span></div></div><div class="cb-s b"><div class="cb-lbl">Return</div><div class="cb-row"><span>Sales conversion</span><span class="cb-v">+10%</span></div><div class="cb-row"><span>Overall sales growth</span><span class="cb-v">+13%</span></div><div class="cb-row"><span>AHT reduction</span><span class="cb-v">50s &times; call volume</span></div><div class="cb-row"><span>Client contract</span><span class="cb-v">Renewed</span></div></div></div><div class="cb-vd">3-week investment. Measurable commercial returns within one quarter. Programme adopted as account standard &mdash; return permanent.</div></div></div>
+            <div class="tp" id="cs1-log"><div class="rb"><div class="rb-t">Intervention Log</div><div class="cl"><div class="cr"><div class="cdot"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><span>QA failure data pulled and analysed for real objection patterns</span><span class="cph">Diagnosis</span></div><div class="cr"><div class="cdot"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><span>Curriculum mapped against 30-day floor performance data</span><span class="cph">Audit</span></div><div class="cr"><div class="cdot"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><span>Sales conversation framework validated with top-performing agents</span><span class="cph">Design</span></div><div class="cr"><div class="cdot"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><span>Articulate 360 simulations built with CRM-integrated call scenarios</span><span class="cph">Build</span></div><div class="cr"><div class="cdot"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><span>Daily nesting coaching cadence launched before first live call</span><span class="cph">Deploy</span></div><div class="cr"><div class="cdot"><svg viewBox="0 0 10 10" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><polyline points="1.5,5 4,7.5 8.5,2.5"/></svg></div><span>Weekly KPI tracking against pre-launch baseline</span><span class="cph">Measure</span></div></div></div></div>
+          </div>
+        </div>
+      </div>
 
-    <!-- CS1 -->
-    <div class="cs-item" id="cs1">
-      <div class="cs-header" onclick="toggleCS('cs1')">
-        <div class="cs-header-left">
-          <span class="cs-number">01</span>
-          <span class="cs-industry">Telecommunications</span>
-          <span class="cs-title">Converting Knowledge Into Revenue</span>
+      <!-- CS2 -->
+      <div class="cs-card" id="cs2">
+        <div class="cs-top" onclick="tP('cs2')">
+          <div class="cs-n-col"><div class="cs-n">02</div></div>
+          <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Global Logistics</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Market</span></div><div class="cs-title">Post-Training Performance Gap &mdash; Global Logistics Account</div><div class="cs-hook">Agents completing onboarding and arriving on the floor underprepared. CSAT below target, system usage poor. The nesting model developed here was subsequently adopted globally by the client.</div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">+9pp</div><div class="kl">CSAT</div></div><div><div class="kv">+25%</div><div class="kl">System Usage</div></div><div><div class="kv">Global</div><div class="kl">Rollout</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
         </div>
-        <div class="cs-toggle">
-          <div class="cs-toggle-arrow">↓</div>
-        </div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">CSAT Score &mdash; Monthly Trend (%)</div><div class="cc-ins">CSAT recovered two months after relaunch and continued improving as the nesting model matured.</div><canvas id="c2a"></canvas></div><div class="cc"><div class="cc-lbl">Pareto &mdash; Top CSAT Failure Causes</div><div class="cc-ins">Top 3 causes drove 76% of all CSAT failures. Intervention targeted these three exclusively.</div><canvas id="c2b"></canvas></div></div></div>
+        <div class="cs-at" onclick="tA('cs2')"><div style="display:flex;align-items:center;"><div class="cs-at-lbl">Full Analysis</div><div class="cs-at-sub">&mdash; root cause &middot; cost/benefit</div></div><div class="cs-at-arr">&darr;</div></div>
+        <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs2','story')">Story</button><button class="tab" onclick="swT('cs2','rca')">5 Whys</button><button class="tab" onclick="swT('cs2','cb')">Cost vs Benefit</button></div>
+        <div class="tp on" id="cs2-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">A global logistics operation with consistent CSAT pressure. Agents passing training &mdash; completion rates fine. On the floor, system usage inconsistent and CSAT underperforming. The standard diagnosis was more training. The actual problem was structural.</div></div><div><div class="sl">Approach</div><div class="st">Programme rebuilt around patterns extracted from live QA failure data. System navigation replicas built for zero-risk practice. A nesting model introduced formal shared accountability between L&amp;D and operations &mdash; the first time these two functions shared responsibility on this account.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">CSAT improved 9 percentage points. System usage increased 25%. The nesting model was adopted globally by the logistics client. A 5-week investment produced an operational model the client scaled worldwide.</div></div></div></div>
+        <div class="tp" id="cs2-rca"><div class="rb"><div class="rb-t">5 Whys</div><div class="wr"><span class="wn">W1</span><div><div class="wq">Why was CSAT below target despite agents completing onboarding?</div><div class="wa">Wrong system steps, inconsistent resolution paths on live calls.</div></div></div><div class="wr"><span class="wn">W2</span><div><div class="wq">Why were interactions being handled incorrectly?</div><div class="wa">Gap between training content and real floor demands &mdash; skills trained didn't match skills required.</div></div></div><div class="wr"><span class="wn">W3</span><div><div class="wq">Why was there a gap between training and floor demands?</div><div class="wa">Training designed from product documentation, not analysis of what agents were failing at in their first 30 days.</div></div></div><div class="wr"><span class="wn">W4</span><div><div class="wq">Why wasn't failure data used to design training?</div><div class="wa">QA and L&amp;D operated in separate silos with no formal process for failure data to feed into curriculum design.</div></div></div><div class="wr"><span class="wn">W5</span><div><div class="wq">Why did these functions operate in silos?</div><div class="wa">No shared accountability structure. Each team tracked its own KPI. Nobody owned the full new hire performance journey.<div class="root-b">Root Cause</div></div></div></div></div></div>
+        <div class="tp" id="cs2-cb"><div class="rb"><div class="rb-t">Cost vs Benefit</div><div class="cbg"><div class="cb-s c"><div class="cb-lbl">Investment</div><div class="cb-row"><span>Programme rebuild</span><span class="cb-v">~3 weeks</span></div><div class="cb-row"><span>QA data analysis</span><span class="cb-v">~1 week</span></div><div class="cb-row"><span>Nesting model design</span><span class="cb-v">~1 week</span></div><div class="cb-row"><span>Cross-functional alignment</span><span class="cb-v">2 workshops</span></div></div><div class="cb-s b"><div class="cb-lbl">Return</div><div class="cb-row"><span>CSAT improvement</span><span class="cb-v">+9pp</span></div><div class="cb-row"><span>System usage</span><span class="cb-v">+25%</span></div><div class="cb-row"><span>Nesting model</span><span class="cb-v">Global adoption</span></div></div></div><div class="cb-vd">5-week investment. 9pp CSAT improvement. Operational model the client scaled globally.</div></div></div>
+        </div></div>
       </div>
-      <div class="cs-cards">
-        <div class="cs-card">
-          <div class="cs-card-label">What</div>
-          <div class="cs-card-text">A sales and technical support programme for a leading US telecommunications company was underperforming commercially. Agents knew the product catalogue but couldn't convert on live calls. Conversion was flat. AHT was inflated.</div>
+
+      <!-- CS3 -->
+      <div class="cs-card" id="cs3">
+        <div class="cs-top" onclick="tP('cs3')">
+          <div class="cs-n-col"><div class="cs-n">03</div></div>
+          <div class="cs-body"><div class="cs-tags"><span class="cs-tag">US Healthcare</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; EMEA</span></div><div class="cs-title">Empathy Framework Implementation &mdash; Healthcare CX Account</div><div class="cs-hook">Agents resolving issues correctly but failing on customer sentiment. Technically competent, emotionally flat. A purpose-built empathy framework closed an 8-point sentiment gap in three months and was embedded in standard onboarding.</div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">+8pp</div><div class="kl">Sentiment</div></div><div><div class="kv">&minus;22%</div><div class="kl">Complaints</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
         </div>
-        <div class="cs-card">
-          <div class="cs-card-label">How</div>
-          <div class="cs-card-text">Redesigned the programme from scratch — built real call flow simulations in Articulate 360, objection-handling scenarios in Storyline tied to live CRM data, and a nesting coaching cadence that reinforced trained behaviours on the floor.</div>
-          <div class="cs-card-tools">
-            <span class="cs-card-tool">Articulate 360</span>
-            <span class="cs-card-tool">Storyline</span>
-            <span class="cs-card-tool">Salesforce CRM</span>
-            <span class="cs-card-tool">Nesting Coaching Model</span>
-          </div>
-        </div>
-        <div class="cs-card result">
-          <div class="cs-card-label">Result</div>
-          <div class="cs-card-text">Sales conversion +10%<br>Overall sales growth +13%<br>AHT reduced −50 seconds<br>Client extended scope.</div>
-        </div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Customer Sentiment &mdash; Monthly Trend (%)</div><div class="cc-ins">Sentiment improved significantly after framework launch. Sustained &mdash; not a one-month spike.</div><canvas id="c3a"></canvas></div><div class="cc"><div class="cc-lbl">Pareto &mdash; Top Causes of Negative Sentiment</div><div class="cc-ins">"No acknowledgment" and "scripted tone" drove 65% of negative feedback. Both targeted directly.</div><canvas id="c3b"></canvas></div></div></div>
+        <div class="cs-at" onclick="tA('cs3')"><div style="display:flex;align-items:center;"><div class="cs-at-lbl">Full Analysis</div><div class="cs-at-sub">&mdash; root cause &middot; cost/benefit</div></div><div class="cs-at-arr">&darr;</div></div>
+        <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs3','story')">Story</button><button class="tab" onclick="swT('cs3','rca')">5 Whys</button><button class="tab" onclick="swT('cs3','cb')">Cost vs Benefit</button></div>
+        <div class="tp on" id="cs3-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">Healthcare customers reaching the contact centre with emotionally charged situations. Agents resolving the administrative issue correctly but missing the emotional dimension. Sentiment scores low. Complaints referenced feeling dismissed or rushed.</div></div><div><div class="sl">Approach</div><div class="st">Standard CX training frameworks designed for retail &mdash; didn't account for emotional stakes in healthcare. A purpose-built empathy framework with specific language guides, pause structures, and acknowledgment techniques embedded through role-play tied to real call recordings.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">Customer sentiment improved 8 points within three months. Complaint volume dropped 22%. Framework embedded in standard onboarding for all new agents &mdash; making the return compounding rather than one-time.</div></div></div></div>
+        <div class="tp" id="cs3-rca"><div class="rb"><div class="rb-t">5 Whys</div><div class="wr"><span class="wn">W1</span><div><div class="wq">Why were sentiment scores low despite accurate resolution?</div><div class="wa">Customers reported feeling dismissed &mdash; technically correct but emotionally flat interactions.</div></div></div><div class="wr"><span class="wn">W2</span><div><div class="wq">Why were interactions emotionally flat?</div><div class="wa">Agents had no structured empathy language &mdash; defaulting to transactional response patterns.</div></div></div><div class="wr"><span class="wn">W3</span><div><div class="wq">Why didn't agents have empathy techniques?</div><div class="wa">Training covered product and system but not the emotional dimension of healthcare interactions.</div></div></div><div class="wr"><span class="wn">W4</span><div><div class="wq">Why wasn't the emotional dimension covered?</div><div class="wa">Training framework inherited from a generic retail CX template &mdash; never adapted for healthcare context.</div></div></div><div class="wr"><span class="wn">W5</span><div><div class="wq">Why had the template never been adapted?</div><div class="wa">Sentiment scores weren't tracked at granular enough level to identify the gap. The problem was invisible in the data being reviewed.<div class="root-b">Root Cause</div></div></div></div></div></div>
+        <div class="tp" id="cs3-cb"><div class="rb"><div class="rb-t">Cost vs Benefit</div><div class="cbg"><div class="cb-s c"><div class="cb-lbl">Investment</div><div class="cb-row"><span>Framework design</span><span class="cb-v">~2 weeks</span></div><div class="cb-row"><span>Role-play scenario build</span><span class="cb-v">~1 week</span></div><div class="cb-row"><span>Call recording analysis</span><span class="cb-v">~3 days</span></div></div><div class="cb-s b"><div class="cb-lbl">Return</div><div class="cb-row"><span>Sentiment improvement</span><span class="cb-v">+8pp</span></div><div class="cb-row"><span>Complaint reduction</span><span class="cb-v">&minus;22%</span></div><div class="cb-row"><span>Embedded in onboarding</span><span class="cb-v">Permanent</span></div></div></div><div class="cb-vd">3-week investment closed an 8-point sentiment gap. Embedded in standard onboarding &mdash; return compounds with every new hire.</div></div></div>
+        </div></div>
       </div>
-      <div class="cs-read-more-row">
-        <button class="cs-read-btn" onclick="toggleCS('cs1')">
-          <span class="cs-read-btn-text"></span>→
-        </button>
-      </div>
-      <div class="cs-expanded">
-        <div class="cs-expanded-inner">
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Challenge</div>
-            <div class="cs-story-text">
-              <p>The existing training programme for one of the largest US telecommunications accounts was delivering agents who could recite product specs but couldn't sell them. Conversion rates were stagnant. Average handle time was inflated — agents were spending extra time on calls because they lacked the conversational frameworks to guide customers to decisions efficiently.</p>
-              <p>The client was watching these numbers. The training function needed to prove it could move commercial metrics, not just produce graduates.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Approach</div>
-            <div class="cs-story-text">
-              <p>I identified the core problem: the programme was knowledge-heavy and interaction-light. Agents were being assessed on what they knew, not on what they could do under pressure.</p>
-              <p>I redesigned the curriculum around simulated live call scenarios in Articulate 360 and Storyline, using real objection patterns extracted from QA data. Every scenario was tied to Salesforce CRM workflows so agents were practising the actual system they'd use on the floor. I also restructured the nesting period — introducing a daily coaching cadence that tracked and reinforced trained behaviours before they had time to decay.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Result</div>
-            <div class="cs-story-text">
-              <p>Sales conversion increased 10%. Overall sales grew 13% within the quarter. AHT dropped by 50 seconds — not because agents were rushing, but because they were navigating calls with greater confidence and structure.</p>
-              <p>The client extended their scope with the operation. The redesigned programme became the standard delivery model for the account.</p>
-            </div>
-          </div>
+
+      <!-- CS4 -->
+      <div class="cs-card" id="cs4">
+        <div class="cs-top" onclick="tP('cs4')">
+          <div class="cs-n-col"><div class="cs-n">04</div></div>
+          <div class="cs-body"><div class="cs-tags"><span class="cs-tag">BPO Operations</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; EMEA Scale-Up</span></div><div class="cs-title">New Hire Ramp-Up Programme &mdash; Large-Scale BPO Expansion</div><div class="cs-hook">1,500 to 2,200 headcount in 10 months. Training system already failing before scale began. Foundations rebuilt first &mdash; 700 people onboarded with no measurable impact on live account performance.</div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">700</div><div class="kl">Onboarded</div></div><div><div class="kv">&minus;20%</div><div class="kl">Attrition</div></div><div><div class="kv">94%</div><div class="kl">Pass Rate</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
         </div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Early Attrition Rate &mdash; Monthly (%)</div><div class="cc-ins">Peaked at 23% in month 4 &mdash; the trigger for the rebuild. Declined overall with natural variance from intake surges.</div><canvas id="c4a"></canvas></div><div class="cc"><div class="cc-lbl">Nesting Pass Rate by Starter Group (%)</div><div class="cc-ins">Improved across 10 groups with realistic dips from supervisor changes and system updates. Hover each bar.</div><canvas id="c4b"></canvas></div></div></div>
+        <div class="cs-at" onclick="tA('cs4')"><div style="display:flex;align-items:center;"><div class="cs-at-lbl">Full Analysis</div><div class="cs-at-sub">&mdash; root cause &middot; Pareto &middot; cost/benefit</div></div><div class="cs-at-arr">&darr;</div></div>
+        <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs4','story')">Story</button><button class="tab" onclick="swT('cs4','rca')">5 Whys + Pareto</button><button class="tab" onclick="swT('cs4','cb')">Cost vs Benefit</button></div>
+        <div class="tp on" id="cs4-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">Leadership committed to a 47% headcount increase across two major US accounts in under a year. The training system was already under pressure &mdash; people leaving in their first 90 days, performance below target, client raising concerns in review meetings. Scaling a broken system would amplify every existing problem.</div></div><div><div class="sl">Approach</div><div class="st">Foundations rebuilt before scaling began. In-class assessments identified at-risk individuals during training. The handover SOP was redesigned. Cross-functional review calls established connecting L&amp;D, QA, Recruitment, and Operations &mdash; formal shared accountability for the first time on these accounts.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">700 people onboarded across 10 months. No measurable drop in live account performance. Early attrition fell 20%. Nesting pass rate reached 94%. The training function moved from being cited as a concern in client reviews to being referenced as an operational strength.</div></div></div></div>
+        <div class="tp" id="cs4-rca"><div class="rb"><div class="rb-t">5 Whys</div><div class="wr"><span class="wn">W1</span><div><div class="wq">Why were people leaving within their first 90 days?</div><div class="wa">Arrived on the live floor underprepared and struggled &mdash; felt like being set up to fail.</div></div></div><div class="wr"><span class="wn">W2</span><div><div class="wq">Why were they arriving underprepared?</div><div class="wa">Hard handover from training to operations with no structured support and no readiness gate.</div></div></div><div class="wr"><span class="wn">W3</span><div><div class="wq">Why was there no readiness gate?</div><div class="wa">Nesting was informal &mdash; no coaching structure, no pass/fail criteria, no formal assessment before going live.</div></div></div><div class="wr"><span class="wn">W4</span><div><div class="wq">Why was nesting informal?</div><div class="wa">L&amp;D responsibility ended at training completion. The gap between L&amp;D and operations had no owner.</div></div></div><div class="wr"><span class="wn">W5</span><div><div class="wq">Why did nobody own the gap?</div><div class="wa">No cross-functional accountability structure. Each team tracked its own KPI. Handover zone invisible to everyone.<div class="root-b">Root Cause</div></div></div></div></div><div class="rb" style="margin-top:10px;"><div class="rb-t">Pareto &mdash; Top Contributing Causes of Early Attrition</div><canvas id="c4p" style="max-height:140px;"></canvas></div></div>
+        <div class="tp" id="cs4-cb"><div class="rb"><div class="rb-t">Cost vs Benefit</div><div class="cbg"><div class="cb-s c"><div class="cb-lbl">Investment</div><div class="cb-row"><span>System rebuild</span><span class="cb-v">~4 weeks</span></div><div class="cb-row"><span>Assessment design</span><span class="cb-v">~1 week</span></div><div class="cb-row"><span>SOP redesign</span><span class="cb-v">~2 weeks</span></div><div class="cb-row"><span>Cross-functional governance</span><span class="cb-v">3 workshops</span></div></div><div class="cb-s b"><div class="cb-lbl">Return</div><div class="cb-row"><span>Early attrition</span><span class="cb-v">&minus;20%</span></div><div class="cb-row"><span>Nesting pass rate</span><span class="cb-v">94%</span></div><div class="cb-row"><span>Replacement hires avoided</span><span class="cb-v">~140 people</span></div><div class="cb-row"><span>Client escalations</span><span class="cb-v">Zero</span></div></div></div><div class="cb-vd">Delaying scale by 4 weeks to fix foundations prevented ~140 replacement hires &mdash; each costing more than the entire rebuild investment.</div></div></div>
+        </div></div>
       </div>
+
+      <!-- CS5 -->
+      <div class="cs-card" id="cs5">
+        <div class="cs-top" onclick="tP('cs5')">
+          <div class="cs-n-col"><div class="cs-n">05</div></div>
+          <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Operational Readiness</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Account</span></div><div class="cs-title">Onboarding Optimisation &mdash; Speed-to-Proficiency Reduction</div><div class="cs-hook">A 6-week programme running unchanged because nobody had questioned it against performance data. Kirkpatrick L1&ndash;L4 audit found 40% of classroom time covered content agents never used. Time to proficiency dropped from 6 to 3.5 weeks.</div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">&minus;42%</div><div class="kl">Ramp Time</div></div><div><div class="kv">&minus;15%</div><div class="kl">Error Rate</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
+        </div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Time to Full Performance by Cohort (Weeks)</div><div class="cc-ins">Each cohort ramped faster as the programme matured. 3.5-week target achieved by Group D.</div><canvas id="c5a"></canvas></div><div class="cc"><div class="cc-lbl">Error Rate &mdash; Before vs After Redesign (%)</div><div class="cc-ins">Error rate dropped post-redesign with one uptick in Week 7 from a small group who missed the new programme.</div><canvas id="c5b"></canvas></div></div></div>
+        <div class="cs-at" onclick="tA('cs5')"><div style="display:flex;align-items:center;"><div class="cs-at-lbl">Full Analysis</div><div class="cs-at-sub">&mdash; root cause &middot; cost/benefit</div></div><div class="cs-at-arr">&darr;</div></div>
+        <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs5','story')">Story</button><button class="tab" onclick="swT('cs5','rca')">5 Whys</button><button class="tab" onclick="swT('cs5','cb')">Cost vs Benefit</button></div>
+        <div class="tp on" id="cs5-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">A 6-week programme running unchanged for over a year. Nobody had measured content against actual floor performance. The cost was significant &mdash; 6 weeks of salary before meaningful contribution, operational bottlenecks during peak hiring, pressure on existing staff.</div></div><div><div class="sl">Approach</div><div class="st">A Kirkpatrick L1&ndash;L4 audit identified 40% of classroom time covered content agents never accessed in their first 30 days. Curriculum rebuilt backwards from a 30-day performance map &mdash; every module traced to a specific on-floor behaviour. Daily micro-coaching during nesting prevented skill decay.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">Time to full performance dropped from 6 to 3.5 weeks &mdash; 42% reduction across four cohorts. Error rate fell 15%. At 200+ starters per month, saving 2.5 weeks per person compounds into significant recurring return. Adopted as the standard across all accounts.</div></div></div></div>
+        <div class="tp" id="cs5-rca"><div class="rb"><div class="rb-t">5 Whys</div><div class="wr"><span class="wn">W1</span><div><div class="wq">Why were new starters taking 6 weeks to reach minimum performance?</div><div class="wa">Programme contained content unrelated to what starters needed in their first 30 days.</div></div></div><div class="wr"><span class="wn">W2</span><div><div class="wq">Why did the programme contain irrelevant content?</div><div class="wa">Curriculum never reviewed against actual floor performance data &mdash; designed and left unchanged.</div></div></div><div class="wr"><span class="wn">W3</span><div><div class="wq">Why hadn't the curriculum been reviewed?</div><div class="wa">No regular audit process. L&amp;D owned completion figures, not performance outcomes.</div></div></div><div class="wr"><span class="wn">W4</span><div><div class="wq">Why did L&amp;D own completion and not outcomes?</div><div class="wa">Success was defined as headcount graduating. Speed to performance was never a measurable target.</div></div></div><div class="wr"><span class="wn">W5</span><div><div class="wq">Why wasn't speed to performance a target?</div><div class="wa">The cost of the 6-week timeline was never quantified. Nobody calculated what 2.5 extra weeks of salary per person per month cost at scale.<div class="root-b">Root Cause</div></div></div></div></div></div>
+        <div class="tp" id="cs5-cb"><div class="rb"><div class="rb-t">Cost vs Benefit</div><div class="cbg"><div class="cb-s c"><div class="cb-lbl">Investment</div><div class="cb-row"><span>Kirkpatrick audit</span><span class="cb-v">~1 week</span></div><div class="cb-row"><span>Curriculum rebuild</span><span class="cb-v">~3 weeks</span></div><div class="cb-row"><span>Simulation build</span><span class="cb-v">~2 weeks</span></div><div class="cb-row"><span>Nesting redesign</span><span class="cb-v">~1 week</span></div></div><div class="cb-s b"><div class="cb-lbl">Return</div><div class="cb-row"><span>Time to performance</span><span class="cb-v">&minus;2.5 weeks/person</span></div><div class="cb-row"><span>Error rate</span><span class="cb-v">&minus;15%</span></div><div class="cb-row"><span>Adopted as standard</span><span class="cb-v">All accounts</span></div></div></div><div class="cb-vd">At 200+ starters per month, saving 2.5 weeks per person is significant recurring return. Paid for itself within the first hiring cycle.</div></div></div>
+        </div></div>
+      </div>
+
+      <!-- CS6 -->
+      <div class="cs-card" id="cs6">
+        <div class="cs-top" onclick="tP('cs6')">
+          <div class="cs-n-col"><div class="cs-n">06</div></div>
+          <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Business Transformation</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Account &middot; EMEA</span></div><div class="cs-title">L&amp;D Digital Transformation &mdash; Classroom-to-eLearning Migration</div><div class="cs-hook">Every session required a trainer and a room. Nothing reusable. Costs scaled linearly with headcount. Built the business case, secured buy-in, designed 70+ digital modules, deployed through SuccessFactors LMS. Costs fell 40% permanently.</div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">&minus;40%</div><div class="kl">Training Cost</div></div><div><div class="kv">70+</div><div class="kl">Modules Built</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
+        </div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Training Cost per Starter &mdash; Index (100 = baseline)</div><div class="cc-ins">Cost dropped immediately after digital launch and continued falling. Saving compounds with every hire.</div><canvas id="c6a"></canvas></div><div class="cc"><div class="cc-lbl">Digital Modules Built &mdash; Running Total</div><div class="cc-ins">70+ permanent reusable assets built over 8 months. Each one reducing future delivery cost.</div><canvas id="c6b"></canvas></div></div></div>
+        <div class="cs-at" onclick="tA('cs6')"><div style="display:flex;align-items:center;"><div class="cs-at-lbl">Full Analysis</div><div class="cs-at-sub">&mdash; root cause &middot; cost/benefit</div></div><div class="cs-at-arr">&darr;</div></div>
+        <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs6','story')">Story</button><button class="tab" onclick="swT('cs6','rca')">5 Whys</button><button class="tab" onclick="swT('cs6','cb')">Cost vs Benefit</button></div>
+        <div class="tp on" id="cs6-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">Every new starter needed a trainer's physical time and a room. Nothing reusable. Content quality varied by individual. As headcount grew, training cost base grew proportionally. Nobody had flagged this as a structural problem. I identified it, calculated the cost at scale, and initiated the transformation before being asked to.</div></div><div><div class="sl">Approach</div><div class="st">Built the ROI business case and secured sign-off from operations leadership and the client. Personally designed 70+ modules in Rise 360 and Articulate 360 &mdash; interactive branching scenarios, gamified knowledge checks, self-paced foundational content. Deployed through SuccessFactors LMS with a train-the-trainer programme.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">Training costs fell 40% permanently. A library of 70+ reusable assets built from zero. Delivery consistency improved across all accounts. The operation could now grow headcount without growing the training cost base at the same rate.</div></div></div></div>
+        <div class="tp" id="cs6-rca"><div class="rb"><div class="rb-t">5 Whys</div><div class="wr"><span class="wn">W1</span><div><div class="wq">Why did training costs scale linearly with headcount?</div><div class="wa">Every new starter required a trainer's physical time &mdash; no reusable content existed.</div></div></div><div class="wr"><span class="wn">W2</span><div><div class="wq">Why was there no reusable content?</div><div class="wa">Everything delivered live and verbally &mdash; nothing built into digital modules.</div></div></div><div class="wr"><span class="wn">W3</span><div><div class="wq">Why hadn't anything been built digitally?</div><div class="wa">L&amp;D team lacked authoring skills and tools, and no budget had been allocated.</div></div></div><div class="wr"><span class="wn">W4</span><div><div class="wq">Why hadn't budget been allocated?</div><div class="wa">Leadership viewed training as an operational cost, not a scalable asset. ROI of digital transformation had never been presented.</div></div></div><div class="wr"><span class="wn">W5</span><div><div class="wq">Why had the ROI never been presented?</div><div class="wa">Nobody in L&amp;D had calculated the cost of the current model at scale, let alone built the business case to change it.<div class="root-b">Root Cause</div></div></div></div></div></div>
+        <div class="tp" id="cs6-cb"><div class="rb"><div class="rb-t">Cost vs Benefit</div><div class="cbg"><div class="cb-s c"><div class="cb-lbl">Investment</div><div class="cb-row"><span>Articulate 360 / Rise licences</span><span class="cb-v">~&euro;1,200/yr</span></div><div class="cb-row"><span>Module design (70+ modules)</span><span class="cb-v">~8 months</span></div><div class="cb-row"><span>Train-the-trainer</span><span class="cb-v">~2 weeks</span></div><div class="cb-row"><span>LMS configuration</span><span class="cb-v">~3 weeks</span></div></div><div class="cb-s b"><div class="cb-lbl">Return</div><div class="cb-row"><span>Cost reduction</span><span class="cb-v">&minus;40% permanent</span></div><div class="cb-row"><span>Modules built</span><span class="cb-v">70+ reusable assets</span></div><div class="cb-row"><span>Trainer capacity freed</span><span class="cb-v">~30% gain</span></div></div></div><div class="cb-vd">40% permanent cost reduction. Every new starter trained digitally costs 40% less. ROI grows with every intake.</div></div></div>
+        </div></div>
+      </div>
+
     </div>
-
-    <!-- CS2 -->
-    <div class="cs-item" id="cs2">
-      <div class="cs-header" onclick="toggleCS('cs2')">
-        <div class="cs-header-left">
-          <span class="cs-number">02</span>
-          <span class="cs-industry">Logistics & Healthcare</span>
-          <span class="cs-title">Training That Travels Across Industries</span>
-        </div>
-        <div class="cs-toggle">
-          <div class="cs-toggle-arrow">↓</div>
-        </div>
-      </div>
-      <div class="cs-cards">
-        <div class="cs-card">
-          <div class="cs-card-label">What</div>
-          <div class="cs-card-text">Agents supporting a global logistics operator and a US healthcare provider were completing standard onboarding but underperforming on CSAT and tools usage. The training wasn't translating to floor behaviour.</div>
-        </div>
-        <div class="cs-card">
-          <div class="cs-card-label">How</div>
-          <div class="cs-card-text">Rebuilt both programmes around scenario-based learning derived from real QA data. Added empathy-led conversation frameworks for healthcare, system navigation simulations for logistics. Introduced a shared L&D and operations accountability model during nesting — the first of its kind on these accounts.</div>
-          <div class="cs-card-tools">
-            <span class="cs-card-tool">Rise 360</span>
-            <span class="cs-card-tool">Scenario-Based Design</span>
-            <span class="cs-card-tool">QA Integration</span>
-            <span class="cs-card-tool">Nesting Coaching Model</span>
-          </div>
-        </div>
-        <div class="cs-card result">
-          <div class="cs-card-label">Result</div>
-          <div class="cs-card-text">CSAT +7–10% across both accounts<br>Tools utilisation +25%<br>Nesting model adopted globally by logistics client.</div>
-        </div>
-      </div>
-      <div class="cs-read-more-row">
-        <button class="cs-read-btn" onclick="toggleCS('cs2')">
-          <span class="cs-read-btn-text"></span>→
-        </button>
-      </div>
-      <div class="cs-expanded">
-        <div class="cs-expanded-inner">
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Challenge</div>
-            <div class="cs-story-text">
-              <p>Two very different accounts — one supporting a world-leading logistics operator, another a major US healthcare provider — shared the same problem: agents were passing training but not performing. CSAT scores were below target. Tools utilisation was poor despite the systems being covered in onboarding.</p>
-              <p>Standard onboarding was the problem. It delivered content. It didn't build behaviour.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Approach</div>
-            <div class="cs-story-text">
-              <p>For both accounts I rebuilt the programmes around real customer interaction patterns sourced directly from QA data — not hypothetical scenarios, but the actual conversations agents were failing on the floor.</p>
-              <p>For healthcare, I designed empathy-led conversation frameworks given the emotional sensitivity of customer interactions. For logistics, I built exact replicas of the live system interface so agents practised navigation in a zero-risk environment before their first real call. Both programmes included a nesting coaching model that created formal accountability between L&D and operations for post-training performance — the first time these two functions shared responsibility on either account.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Result</div>
-            <div class="cs-story-text">
-              <p>CSAT improved 7–10% across both accounts. Tools utilisation increased 25%. The nesting coaching model was subsequently adopted globally by the logistics client — taken beyond the account and rolled out as a standard practice across their operation.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CS3 -->
-    <div class="cs-item" id="cs3">
-      <div class="cs-header" onclick="toggleCS('cs3')">
-        <div class="cs-header-left">
-          <span class="cs-number">03</span>
-          <span class="cs-industry">Operations · Scale-Up</span>
-          <span class="cs-title">Scaling Without Breaking</span>
-        </div>
-        <div class="cs-toggle">
-          <div class="cs-toggle-arrow">↓</div>
-        </div>
-      </div>
-      <div class="cs-cards">
-        <div class="cs-card">
-          <div class="cs-card-label">What</div>
-          <div class="cs-card-text">Two of the largest US accounts needed to scale from 1,500 to 2,200 agents in 10 months. Training was already failing — attrition was high, performance declining, and the client relationship under visible strain. Scaling the same broken system was not an option.</div>
-        </div>
-        <div class="cs-card">
-          <div class="cs-card-label">How</div>
-          <div class="cs-card-text">Rebuilt the system before scaling it: in-class assessment activities to identify at-risk agents early, a full SOP redesign for the training-to-operations transition, and cross-functional review calls connecting L&D, QA, Recruitment, and frontline management — creating shared accountability across the entire new hire pipeline.</div>
-          <div class="cs-card-tools">
-            <span class="cs-card-tool">DMAIC</span>
-            <span class="cs-card-tool">SOP Redesign</span>
-            <span class="cs-card-tool">QA Integration</span>
-            <span class="cs-card-tool">Cross-functional Governance</span>
-          </div>
-        </div>
-        <div class="cs-card result">
-          <div class="cs-card-label">Result</div>
-          <div class="cs-card-text">700 agents onboarded in 10 months<br>Attrition −20%<br>Nesting success rate 94%<br>Zero performance impact on live accounts.</div>
-        </div>
-      </div>
-      <div class="cs-read-more-row">
-        <button class="cs-read-btn" onclick="toggleCS('cs3')">
-          <span class="cs-read-btn-text"></span>→
-        </button>
-      </div>
-      <div class="cs-expanded">
-        <div class="cs-expanded-inner">
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Challenge</div>
-            <div class="cs-story-text">
-              <p>Leadership committed to scaling the operation's two largest US accounts by 47% — from 1,500 to 2,200 agents — in under a year. The training function was already under pressure: attrition was climbing, performance metrics were declining, and the client had begun raising concerns. Hiring 700 more people through the same broken system would have amplified every existing problem.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Approach</div>
-            <div class="cs-story-text">
-              <p>I rebuilt the foundations before scaling. First, I introduced qualitative in-class assessment activities that categorised agents by readiness during training itself — identifying at-risk individuals before they reached the floor and routing them into targeted support tracks rather than discovering the problem 30 days later during a performance review.</p>
-              <p>Second, I redesigned the full transition SOP from training to operations — the handover point where most attrition originates. Third, I established recurring cross-functional review calls connecting L&D, QA, Recruitment, and frontline and middle management, creating formal shared accountability for new hire performance for the first time.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Result</div>
-            <div class="cs-story-text">
-              <p>700 agents were onboarded across 10 months with no measurable performance impact on live accounts. New hire attrition dropped 20%. Nesting success rate reached 94%. The training function transitioned from a point of client concern to a recognised strategic asset within the operation.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CS4 -->
-    <div class="cs-item" id="cs4">
-      <div class="cs-header" onclick="toggleCS('cs4')">
-        <div class="cs-header-left">
-          <span class="cs-number">04</span>
-          <span class="cs-industry">L&D Design</span>
-          <span class="cs-title">Cutting the Learning Curve in Half</span>
-        </div>
-        <div class="cs-toggle">
-          <div class="cs-toggle-arrow">↓</div>
-        </div>
-      </div>
-      <div class="cs-cards">
-        <div class="cs-card">
-          <div class="cs-card-label">What</div>
-          <div class="cs-card-text">New hire programmes were taking 6 weeks to reach minimum performance standards — inflating costs, creating operational backlogs during peak hiring, and delaying revenue. The programme hadn't been reviewed against actual performance data in over a year.</div>
-        </div>
-        <div class="cs-card">
-          <div class="cs-card-label">How</div>
-          <div class="cs-card-text">Ran a Kirkpatrick L1–L4 audit and found 40% of classroom time covered content agents never used in their first 30 days. Rebuilt the curriculum backwards from a 30-day performance map. Introduced gamification, Storyline simulations, and daily micro-coaching during nesting.</div>
-          <div class="cs-card-tools">
-            <span class="cs-card-tool">Storyline</span>
-            <span class="cs-card-tool">Kahoot</span>
-            <span class="cs-card-tool">Mentimeter</span>
-            <span class="cs-card-tool">Kirkpatrick L1–L4</span>
-            <span class="cs-card-tool">Performance Mapping</span>
-          </div>
-        </div>
-        <div class="cs-card result">
-          <div class="cs-card-label">Result</div>
-          <div class="cs-card-text">Speed to proficiency: 6 → 3.5 weeks (−42%)<br>Error rate −15%<br>Programme became cross-account standard.</div>
-        </div>
-      </div>
-      <div class="cs-read-more-row">
-        <button class="cs-read-btn" onclick="toggleCS('cs4')">
-          <span class="cs-read-btn-text"></span>→
-        </button>
-      </div>
-      <div class="cs-expanded">
-        <div class="cs-expanded-inner">
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Challenge</div>
-            <div class="cs-story-text">
-              <p>A 6-week new hire programme had become the default across accounts — not because it was optimal, but because nobody had measured it against actual performance outcomes. The cost was significant: 6 weeks of salary before productive contribution, operational bottlenecks during high-volume hiring, and a backlog that put pressure on existing agents to absorb volume.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Approach</div>
-            <div class="cs-story-text">
-              <p>I ran a Kirkpatrick Level 1–4 audit of the programme and found that 40% of classroom time was spent on content agents never accessed in their first 30 days on the floor. The curriculum had been built around what the business wanted to cover, not around what agents needed to perform.</p>
-              <p>I rebuilt it backwards from a 30-day performance map: what does a successful agent do in week one, week two, week three? Everything in the curriculum was traced to a specific performance output. I introduced Storyline-based simulations to replace passive content delivery, gamified critical knowledge retention through Kahoot and Mentimeter, and restructured nesting around daily micro-coaching touchpoints.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Result</div>
-            <div class="cs-story-text">
-              <p>Speed to proficiency dropped from 6 to 3.5 weeks — a 42% reduction. Error rate fell 15%. The redesigned programme was adopted as the standard across all accounts. What had been a 6-week cost became a 3.5-week investment with measurably better outcomes at the other end.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CS5 -->
-    <div class="cs-item" id="cs5">
-      <div class="cs-header" onclick="toggleCS('cs5')">
-        <div class="cs-header-left">
-          <span class="cs-number">05</span>
-          <span class="cs-industry">L&D Transformation</span>
-          <span class="cs-title">From Classroom to Digital at Scale</span>
-        </div>
-        <div class="cs-toggle">
-          <div class="cs-toggle-arrow">↓</div>
-        </div>
-      </div>
-      <div class="cs-cards">
-        <div class="cs-card">
-          <div class="cs-card-label">What</div>
-          <div class="cs-card-text">All training was delivered face-to-face — expensive to scale, inconsistent across trainers, and leaving no reusable assets. As volume grew, training costs scaled linearly with headcount. I identified the opportunity and initiated the transformation before being asked to.</div>
-        </div>
-        <div class="cs-card">
-          <div class="cs-card-label">How</div>
-          <div class="cs-card-text">Built the business case, secured stakeholder and client buy-in, personally designed 70+ modules in Rise 360 and Articulate 360, deployed through SuccessFactors LMS with performance tracking. Upskilled the trainer team on blended digital delivery to maintain quality.</div>
-          <div class="cs-card-tools">
-            <span class="cs-card-tool">Rise 360</span>
-            <span class="cs-card-tool">Articulate 360</span>
-            <span class="cs-card-tool">SuccessFactors LMS</span>
-            <span class="cs-card-tool">Blended Learning Design</span>
-          </div>
-        </div>
-        <div class="cs-card result">
-          <div class="cs-card-label">Result</div>
-          <div class="cs-card-text">Training costs −40%<br>70+ reusable digital modules built<br>Consistent delivery across all accounts<br>Scalable without proportional cost growth.</div>
-        </div>
-      </div>
-      <div class="cs-read-more-row">
-        <button class="cs-read-btn" onclick="toggleCS('cs5')">
-          <span class="cs-read-btn-text"></span>→
-        </button>
-      </div>
-      <div class="cs-expanded">
-        <div class="cs-expanded-inner">
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Challenge</div>
-            <div class="cs-story-text">
-              <p>Every training session was delivered live by a trainer in a room. This meant every new hire needed a trainer's physical time, content quality varied by individual trainer, and nothing was reusable — every session started from scratch. As the operation scaled, training costs scaled proportionally. There was no leverage in the model.</p>
-              <p>Nobody had addressed this. I saw it as a structural problem with a structural solution.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Approach</div>
-            <div class="cs-story-text">
-              <p>I initiated the transformation — built the business case, presented the ROI to operations leadership and secured client buy-in for the change in delivery model. I then personally designed over 70 modules in Rise 360 and Articulate 360: interactive branching scenarios, gamified product knowledge assessments, and self-paced foundational content that freed up live trainer time for complex skills that required human interaction.</p>
-              <p>Everything was deployed through SuccessFactors LMS with completion tracking and assessment scores linked to performance data. I also ran a train-the-trainer programme to ensure the team could facilitate blended delivery effectively rather than just playing videos.</p>
-            </div>
-          </div>
-          <div class="cs-story-block">
-            <div class="cs-story-label">The Result</div>
-            <div class="cs-story-text">
-              <p>Training costs reduced 40%. A library of 70+ reusable digital assets was built from zero. Delivery consistency improved measurably across all accounts — the content was the same regardless of which trainer facilitated the session. The operation could now scale headcount without scaling the training cost base proportionally.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
+<div class="div"></div>
+<!-- AREAS OF EXPERTISE -->
+<section class="sec exp-sec" id="aoe">
+  <div class="sec-in">
+    <div class="eye rev">Areas of Expertise</div>
+    <div class="sec-h rev" style="margin-bottom:32px;">What I bring<br>to an operation.</div>
+    <div class="aoe-grid rev">
+      <div class="aoe-item"><div class="aoe-n">01</div><div class="aoe-t">Operational Excellence</div><div class="aoe-d">Structuring BPO delivery against KPIs, SLAs, and client standards. Building accountability systems that hold performance without constant escalation.</div></div>
+      <div class="aoe-item"><div class="aoe-n">02</div><div class="aoe-t">Vendor &amp; Partner Management</div><div class="aoe-d">Managing outsourced delivery partners across EMEA and LATAM. Creating shared ownership models that align BPO incentives directly to client outcomes.</div></div>
+      <div class="aoe-item"><div class="aoe-n">03</div><div class="aoe-t">CX Performance Improvement</div><div class="aoe-d">Diagnosing CSAT, AHT, FCR, and sentiment failures at root cause. Implementing fixes with tracked results that hold beyond the intervention window.</div></div>
+      <div class="aoe-item"><div class="aoe-n">04</div><div class="aoe-t">Learning Strategy &amp; Programme Design</div><div class="aoe-d">Designing operational readiness systems that reduce time to proficiency and cut cost per head. L&amp;D output connected to floor performance data, not completion rates.</div></div>
+      <div class="aoe-item"><div class="aoe-n">05</div><div class="aoe-t">Root Cause Analysis</div><div class="aoe-d">Applying Lean Six Sigma DMAIC and structured diagnostic frameworks to separate symptoms from causes. Interventions that target the right problem first time.</div></div>
+      <div class="aoe-item"><div class="aoe-n">06</div><div class="aoe-t">Stakeholder &amp; Client Management</div><div class="aoe-d">Presenting operational data and decisions to Fortune 500 client leadership. Translating floor-level insight into executive-level action and shared accountability.</div></div>
+    </div>
+  </div>
+</section>
+<div class="div"></div>
 
 <!-- ABOUT -->
-<section class="section about" id="about">
-  <div>
-    <div class="section-label">About</div>
-    <h2 class="section-title reveal">The person<br>behind the <em>results</em></h2>
-    <p class="about-lead reveal">
-      I sit at the intersection of <strong>learning design</strong> and <strong>operational performance</strong> — the rare combination that lets me build training that actually moves KPIs.
-    </p>
-    <p class="about-body reveal">
-      With roots in Cairo and a career spanning EMEA and LATAM, I have spent four years inside high-volume BPO environments designing, scaling, and measuring learning programmes for Fortune 500 clients. Telecom, logistics, healthcare, tech, media, e-commerce — I have delivered in all of them.
-      <br><br>
-      Currently based in Rotterdam, completing an Executive MBA at Erasmus University while advising training and operations teams on performance improvement. Fully eligible to work in the Netherlands — no visa sponsorship required.
-    </p>
-    <div class="about-tags reveal">
-      <span class="about-tag">Instructional Design</span>
-      <span class="about-tag">Sales Enablement</span>
-      <span class="about-tag">CX Operations</span>
-      <span class="about-tag">Lean Six Sigma</span>
-      <span class="about-tag">Learning Analytics</span>
-      <span class="about-tag">COPC</span>
-      <span class="about-tag">Kirkpatrick L1–L4</span>
-      <span class="about-tag">DMAIC</span>
-      <span class="about-tag">Blended Learning</span>
-      <span class="about-tag">Performance Consulting</span>
-    </div>
-  </div>
-  <div class="reveal">
-    <div class="about-card">
-      <div class="about-row">
-        <span class="about-row-key">Location</span>
-        <span class="about-row-val">Rotterdam, Netherlands</span>
+<section class="sec about-sec" id="about">
+  <div class="sec-in">
+    <div class="eye rev">About</div>
+    <div class="about-g">
+      <div>
+        <div class="sec-h rev" style="margin-bottom:16px;">Background.</div>
+        <p class="a-lead rev">A background in sales, then four years building and running performance systems inside Fortune 500 BPO environments across EMEA and LATAM.</p>
+        <p class="a-body rev">I started in sales &mdash; almost three years in B2B medical sales across the US healthcare industry, managing pipeline, handling objections, learning how conversations fail and how they win. That experience directly shaped the operational work that followed.<br><br>My formal career was built inside Teleperformance's EMEA operation &mdash; one of the world's largest BPO organisations &mdash; across Fortune 500 accounts in US telecommunications, global logistics, healthcare, media, and e-commerce. I progressed from trainer to Operations Business Unit Manager, responsible for 140&ndash;160 indirect FTE across the company's largest US media and telecommunications account.<br><br>Based in Rotterdam. Executive MBA &mdash; Heliopolis University / AHK German Chamber.</p>
+        <div class="a-tags rev">
+          <span class="a-tag">Operational Excellence</span><span class="a-tag">Vendor Governance</span><span class="a-tag">Performance Management</span><span class="a-tag">Lean Six Sigma</span><span class="a-tag">Kirkpatrick L1&ndash;L4</span><span class="a-tag">COPC</span><span class="a-tag">DMAIC</span><span class="a-tag">Root Cause Analysis</span><span class="a-tag">BPO Delivery</span><span class="a-tag">Stakeholder Management</span>
+        </div>
       </div>
-      <div class="about-row">
-        <span class="about-row-key">Education</span>
-        <span class="about-row-val">EMBA — Erasmus / AHK<br><small style="opacity:0.5;font-size:11px">Expected July 2026</small></span>
-      </div>
-      <div class="about-row">
-        <span class="about-row-key">Certification</span>
-        <span class="about-row-val">COPC Lean 6σ Yellow Belt</span>
-      </div>
-      <div class="about-row">
-        <span class="about-row-key">Industries</span>
-        <span class="about-row-val" style="font-size:12px">Telecom · Logistics · Healthcare<br>Tech · Media · E-commerce</span>
-      </div>
-      <div class="about-row">
-        <span class="about-row-key">Work Rights</span>
-        <span class="about-row-val">Full NL eligibility</span>
-      </div>
-      <div class="about-row">
-        <span class="about-row-key">Status</span>
-        <span class="about-row-val status-open">Open to Opportunities</span>
+      <div class="rev">
+        <div class="a-card">
+          <div class="a-row"><span class="a-key">Location</span><span class="a-val">Rotterdam, Netherlands</span></div>
+          <div class="a-row"><span class="a-key">Education</span><span class="a-val">Executive MBA<br><small style="opacity:.45;font-size:10px;">Heliopolis University / AHK German Chamber</small></span></div>
+          <div class="a-row"><span class="a-key">Certification</span><span class="a-val">COPC Lean Six Sigma Yellow Belt</span></div>
+          <div class="a-row"><span class="a-key">Background</span><span class="a-val" style="font-size:11px;">Fortune 500 &mdash; Telecom &middot; Logistics<br>Healthcare &middot; Media &middot; E-commerce</span></div>
+          <div class="a-row"><span class="a-key">Work Rights</span><span class="a-val">Netherlands Work Permit &middot; Valid</span></div>
+        </div>
       </div>
     </div>
   </div>
 </section>
-
-<div class="divider"></div>
+<div class="div"></div>
 
 <!-- EXPERIENCE -->
-<section class="section experience" id="experience">
-  <div class="section-label">Experience</div>
-  <h2 class="section-title reveal">Where I've<br><em>delivered</em></h2>
-
-  <div class="timeline">
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-date">July 2025 – Present</div>
-      <div class="tl-title tl-advisory">Independent L&D & Operations Consultant</div>
-      <div class="tl-company">Self-employed · Rotterdam, Netherlands</div>
-      <div class="tl-achievements">
-        <div class="tl-ach">
-          <span class="tl-ach-marker">→</span>
-          <span>Advisory work with training and operations teams on performance improvement and learning design.</span>
-        </div>
-        <div class="tl-ach">
-          <span class="tl-ach-marker">→</span>
-          <span>Concurrent with Executive MBA at Erasmus University Rotterdam.</span>
-        </div>
+<section class="sec tl-sec" id="tl">
+  <div class="sec-in">
+    <div class="eye rev">Experience</div>
+    <div class="sec-h rev" style="margin-bottom:40px;">Career record</div>
+    <div class="tl">
+      <div class="tl-i">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Jul 2025 &ndash; Present</div>
+        <div class="tl-title">Independent L&amp;D &amp; CX Operations Consultant</div>
+        <div class="tl-co">Self-Employed &middot; Rotterdam, Netherlands</div>
+        <div class="tl-a"><div class="tl-d"></div><span>Project-based L&amp;D and CX Operations consulting. Concurrent with Executive MBA completion.</span></div>
+        <div class="tl-cred">Consulting<span>&middot;</span>Performance Improvement<span>&middot;</span>L&amp;D Strategy</div>
       </div>
-      <div class="tl-tags">
-        <span class="tl-tag">L&D Consulting</span>
-        <span class="tl-tag">Performance Improvement</span>
-        <span class="tl-tag">ZZP / Freelance</span>
+      <div class="tl-i">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Feb 2025 &ndash; Jul 2025</div>
+        <div class="tl-title">Operations Business Unit Manager</div>
+        <div class="tl-co">Teleperformance &middot; Cairo, Egypt</div>
+        <div class="tl-a"><div class="tl-d"></div><span>Managed the company's largest US media and telecommunications account &mdash; 140&ndash;160 indirect FTE across sales, technical support, and retail.</span></div>
+        <div class="tl-a"><div class="tl-d"></div><span>Improved sales conversion 5% and drove 13% overall sales growth through redesigned call flows and targeted coaching cadences.</span></div>
+        <div class="tl-a"><div class="tl-d"></div><span>Increased NPS and customer sentiment 5&ndash;8pp month-on-month through structured CX analytics and systematic problem removal.</span></div>
+        <div class="tl-cred">P&amp;L Ownership<span>&middot;</span>KPI Management<span>&middot;</span>Client Delivery<span>&middot;</span>COPC</div>
       </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-date">Feb 2025 – Jul 2025</div>
-      <div class="tl-title">Operations Business Unit Manager</div>
-      <div class="tl-company">Teleperformance · Cairo, Egypt</div>
-      <div class="tl-achievements">
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Managed the company's largest US media & telecom account — 140–160 indirect FTE across sales, technical support, and retail.</span></div>
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Improved sales conversion 5% and drove 13% overall sales growth through optimised call flows and targeted coaching.</span></div>
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Increased NPS and customer sentiment 5–8% MoM in a single quarter through CX analytics and systematic pain point removal.</span></div>
+      <div class="tl-i">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Apr 2024 &ndash; Feb 2025</div>
+        <div class="tl-title">Operations Training Manager</div>
+        <div class="tl-co">Teleperformance &middot; Cairo, Egypt</div>
+        <div class="tl-a"><div class="tl-d"></div><span>Scaled multilingual training across Fortune 500 accounts &mdash; onboarding 200+ starters per month in 6 languages across EMEA and LATAM. Managed 5 supervisors and 47 trainers.</span></div>
+        <div class="tl-a"><div class="tl-d"></div><span>Reduced time to proficiency from 6 to 3.5 weeks, cut training costs 40%, and delivered &minus;50s AHT, +7pp NPS, and +10% sales conversion.</span></div>
+        <div class="tl-a"><div class="tl-d"></div><span>Initiated and executed classroom-to-digital transformation: 70+ Rise 360 and Articulate 360 modules deployed via SuccessFactors LMS.</span></div>
+        <div class="tl-cred">L&amp;D Strategy<span>&middot;</span>Articulate 360<span>&middot;</span>Lean Six Sigma<span>&middot;</span>SuccessFactors</div>
       </div>
-      <div class="tl-tags">
-        <span class="tl-tag">P&L Ownership</span><span class="tl-tag">KPI Management</span><span class="tl-tag">Client Delivery</span><span class="tl-tag">COPC</span>
+      <div class="tl-i">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Oct 2022 &ndash; Apr 2024</div>
+        <div class="tl-title">Training Supervisor</div>
+        <div class="tl-co">Teleperformance &middot; Cairo, Egypt</div>
+        <div class="tl-a"><div class="tl-d"></div><span>Led 6&ndash;8 trainers delivering onboarding for 75+ new starters per month across global logistics and US telecommunications accounts.</span></div>
+        <div class="tl-a"><div class="tl-d"></div><span>Designed the nesting coaching model subsequently adopted globally by the logistics client &mdash; contributing to &minus;30s AHT, +7&ndash;10% CSAT, and +25% system usage.</span></div>
+        <div class="tl-cred">Team Leadership<span>&middot;</span>Coaching Design<span>&middot;</span>Global Rollout</div>
       </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-date">Apr 2024 – Feb 2025</div>
-      <div class="tl-title">Operations Training Manager</div>
-      <div class="tl-company">Teleperformance · Cairo, Egypt</div>
-      <div class="tl-achievements">
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Scaled multilingual training for 1,500–2,200 agents across Fortune 500 accounts — onboarding 200+ new hires/month in 6 languages.</span></div>
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Cut speed to proficiency from 6 to 3.5 weeks, reduced training costs 40%, delivered −50s AHT, +7pp NPS, +10% sales conversion.</span></div>
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Led classroom-to-digital transformation: 70+ Rise 360 & Articulate modules. Managed 5 supervisors and 47 trainers.</span></div>
+      <div class="tl-i">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Sep 2021 &ndash; Oct 2022</div>
+        <div class="tl-title">Corporate Trainer</div>
+        <div class="tl-co">Teleperformance &middot; Cairo, Egypt</div>
+        <div class="tl-a"><div class="tl-d"></div><span>Delivered 2 full training classes per month (~40 starters each). 1,000+ training hours. Consistent 90%+ satisfaction scores.</span></div>
+        <div class="tl-a"><div class="tl-d"></div><span>Improved new starter performance 15&ndash;25% within first 30 days through scenario-based learning and structured micro-coaching.</span></div>
+        <div class="tl-cred">Programme Facilitation<span>&middot;</span>Performance Coaching</div>
       </div>
-      <div class="tl-tags">
-        <span class="tl-tag">L&D Strategy</span><span class="tl-tag">Articulate 360</span><span class="tl-tag">Lean Six Sigma DMAIC</span><span class="tl-tag">SuccessFactors</span>
-      </div>
-    </div>
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-date">Oct 2022 – Apr 2024</div>
-      <div class="tl-title">Training Supervisor</div>
-      <div class="tl-company">Teleperformance · Cairo, Egypt</div>
-      <div class="tl-achievements">
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Led 6–8 trainers delivering onboarding for 75+ new hires/month across world-leading logistics and telecom accounts.</span></div>
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Designed nesting coaching model adopted globally by the logistics client — contributing to −30s AHT, +7–10% CSAT, +25% tools utilisation.</span></div>
-      </div>
-      <div class="tl-tags">
-        <span class="tl-tag">Team Leadership</span><span class="tl-tag">Coaching</span><span class="tl-tag">Global Rollout</span>
+      <div class="tl-i">
+        <div class="tl-dot"></div>
+        <div class="tl-date">Apr 2018 &ndash; Nov 2020</div>
+        <div class="tl-title">Sales Executive</div>
+        <div class="tl-co">Commercial Sales &middot; Cairo, Egypt</div>
+        <div class="tl-a"><div class="tl-d"></div><span>Almost three years in B2B medical sales across the US healthcare industry &mdash; account development, consultative selling, and client retention.</span></div>
+        <div class="tl-a"><div class="tl-d"></div><span>Direct sales floor experience that later informed training design &mdash; understood objection patterns and conversion blockers from the agent's perspective.</span></div>
+        <div class="tl-cred">B2B Medical Sales<span>&middot;</span>Account Development<span>&middot;</span>US Healthcare</div>
       </div>
     </div>
-
-    <div class="tl-item">
-      <div class="tl-dot"></div>
-      <div class="tl-date">Sep 2021 – Oct 2022</div>
-      <div class="tl-title">Corporate Trainer</div>
-      <div class="tl-company">Teleperformance · Cairo, Egypt</div>
-      <div class="tl-achievements">
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Delivered 2 full training classes/month (~40 new hires). 1,000+ training hours. >90% training satisfaction consistently.</span></div>
-        <div class="tl-ach"><span class="tl-ach-marker">→</span><span>Improved new hire performance 15–25% within first 30 days through scenario-based learning and micro-coaching.</span></div>
-      </div>
-      <div class="tl-tags">
-        <span class="tl-tag">Facilitation</span><span class="tl-tag">New Hire Training</span><span class="tl-tag">Performance Coaching</span>
-      </div>
-    </div>
-
   </div>
 </section>
+<div class="div"></div>
 
 <!-- SKILLS -->
-<section class="section skills-section" id="skills">
-  <div>
-    <div class="section-label">Skills</div>
-    <h2 class="section-title reveal">What I<br><em>bring</em></h2>
-
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Core Competencies</div>
-      <div class="skill-row"><span class="skill-name">Learning & Development</span><div class="skill-bar"><div class="skill-fill" data-w="95"></div></div></div>
-      <div class="skill-row"><span class="skill-name">Instructional Design</span><div class="skill-bar"><div class="skill-fill" data-w="92"></div></div></div>
-      <div class="skill-row"><span class="skill-name">CX Operations Management</span><div class="skill-bar"><div class="skill-fill" data-w="88"></div></div></div>
-      <div class="skill-row"><span class="skill-name">Sales Performance Coaching</span><div class="skill-bar"><div class="skill-fill" data-w="84"></div></div></div>
-      <div class="skill-row"><span class="skill-name">Process Optimisation — Lean 6σ</span><div class="skill-bar"><div class="skill-fill" data-w="80"></div></div></div>
-      <div class="skill-row"><span class="skill-name">Data Analysis & KPI Management</span><div class="skill-bar"><div class="skill-fill" data-w="78"></div></div></div>
-    </div>
-
-    <div class="skill-group reveal">
-      <div class="skill-group-label">Languages</div>
-      <div class="lang-list">
-        <div class="lang-row">
-          <span class="lang-name-l">Arabic</span>
-          <span class="lang-level-l">Native</span>
-          <div class="lang-dots-l"><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div></div>
-        </div>
-        <div class="lang-row">
-          <span class="lang-name-l">English</span>
-          <span class="lang-level-l">C1</span>
-          <div class="lang-dots-l"><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld"></div></div>
-        </div>
-        <div class="lang-row">
-          <span class="lang-name-l">Dutch</span>
-          <span class="lang-level-l">A2→B1</span>
-          <div class="lang-dots-l"><div class="ld on"></div><div class="ld half"></div><div class="ld"></div><div class="ld"></div><div class="ld"></div></div>
-        </div>
-        <div class="lang-row">
-          <span class="lang-name-l">German</span>
-          <span class="lang-level-l">A1</span>
-          <div class="lang-dots-l"><div class="ld half"></div><div class="ld"></div><div class="ld"></div><div class="ld"></div><div class="ld"></div></div>
+<section class="sec sk-sec">
+  <div class="sec-in">
+    <div class="eye rev">Depth</div>
+    <div class="sec-h rev" style="margin-bottom:40px;">Technical capabilities</div>
+    <div class="sk-g rev">
+      <div>
+        <div class="sg-l">Core Areas</div>
+        <div class="sk-row"><span class="sk-nm">CX Operations &amp; Delivery Management</span><div class="sk-bar"><div class="sk-fill" data-w="95"></div></div></div>
+        <div class="sk-row"><span class="sk-nm">BPO Vendor Governance</span><div class="sk-bar"><div class="sk-fill" data-w="92"></div></div></div>
+        <div class="sk-row"><span class="sk-nm">Learning &amp; Development</span><div class="sk-bar"><div class="sk-fill" data-w="95"></div></div></div>
+        <div class="sk-row"><span class="sk-nm">Performance Optimisation</span><div class="sk-bar"><div class="sk-fill" data-w="90"></div></div></div>
+        <div class="sk-row"><span class="sk-nm">Root Cause Analysis &mdash; Lean 6&sigma;</span><div class="sk-bar"><div class="sk-fill" data-w="84"></div></div></div>
+        <div class="sk-row"><span class="sk-nm">Data Analysis &amp; KPI Management</span><div class="sk-bar"><div class="sk-fill" data-w="80"></div></div></div>
+        <div style="margin-top:26px;">
+          <div class="sg-l">Languages</div>
+          <div class="lang-row"><span class="lang-nm">Arabic</span><span class="lang-pr">Native</span><div class="lang-dots"><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div></div></div>
+          <div class="lang-row"><span class="lang-nm">English</span><span class="lang-pr">Fluent</span><div class="lang-dots"><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld"></div></div></div>
+          <div class="lang-row"><span class="lang-nm">Dutch</span><span class="lang-pr">Conversational</span><div class="lang-dots"><div class="ld on"></div><div class="ld h"></div><div class="ld"></div><div class="ld"></div><div class="ld"></div></div></div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <div class="reveal">
-    <div style="margin-top:80px">
-      <div class="tools-label">Tools & Platforms</div>
-      <div class="tools-grid">
-        <div class="tool-cell"><div class="tool-cell-name">Articulate 360</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Rise 360</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Storyline</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">SuccessFactors</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Kahoot</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Mentimeter</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Quizlet</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Salesforce CRM</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Power BI</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">MS Teams</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Google Suite</div></div>
-        <div class="tool-cell"><div class="tool-cell-name">Arcade</div></div>
-      </div>
-
-      <div class="about-card" style="margin-top:3px">
-        <div class="about-row">
-          <span class="about-row-key">Methodology</span>
-          <span class="about-row-val">Kirkpatrick L1–L4</span>
+      <div>
+        <div class="sg-l">Tools &amp; Platforms</div>
+        <div class="tools-g">
+          <div class="tc-cell">Articulate 360</div><div class="tc-cell">Rise 360</div><div class="tc-cell">Storyline</div><div class="tc-cell">SuccessFactors</div>
+          <div class="tc-cell">Salesforce CRM</div><div class="tc-cell">Power BI</div><div class="tc-cell">Kahoot</div><div class="tc-cell">Mentimeter</div>
+          <div class="tc-cell">MS Teams</div><div class="tc-cell">Google Suite</div><div class="tc-cell">Quizlet</div><div class="tc-cell">Arcade</div>
         </div>
-        <div class="about-row">
-          <span class="about-row-key">Framework</span>
-          <span class="about-row-val">Lean Six Sigma DMAIC</span>
-        </div>
-        <div class="about-row">
-          <span class="about-row-key">Standard</span>
-          <span class="about-row-val">COPC Certified</span>
-        </div>
-        <div class="about-row">
-          <span class="about-row-key">Delivery</span>
-          <span class="about-row-val">Virtual · Classroom · Blended</span>
+        <div class="a-card" style="margin-top:1px;">
+          <div class="a-row"><span class="a-key">Evaluation</span><span class="a-val">Kirkpatrick L1&ndash;L4</span></div>
+          <div class="a-row"><span class="a-key">Improvement</span><span class="a-val">Lean Six Sigma DMAIC</span></div>
+          <div class="a-row"><span class="a-key">Standard</span><span class="a-val">COPC Certified</span></div>
+          <div class="a-row"><span class="a-key">Delivery</span><span class="a-val">Virtual &middot; Classroom &middot; Blended</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
+<div class="div"></div>
 
 <!-- CONTACT -->
-<section class="contact-section" id="contact">
-  <div>
-    <div class="section-label">Contact</div>
-    <h2 class="section-title reveal">Let's talk<br><em>seriously</em></h2>
-    <p class="contact-sub reveal">
-      Available for L&D Manager and Training Manager roles across the Netherlands and EMEA. Open to advisory and consultancy engagements. Fully eligible to work in the Netherlands.
-    </p>
-  </div>
-  <div class="contact-links reveal">
-    <a href="mailto:majakanyar2@gmail.com" class="contact-link">
-      <span class="cl-type">Email</span>
-      <span class="cl-val">majakanyar2@gmail.com</span>
-    </a>
-    <a href="https://linkedin.com/in/majak2" target="_blank" class="contact-link">
-      <span class="cl-type">LinkedIn</span>
-      <span class="cl-val">linkedin.com/in/majak2</span>
-    </a>
-    <a href="tel:+31619341044" class="contact-link">
-      <span class="cl-type">Phone</span>
-      <span class="cl-val">+31 6 19 341 044</span>
-    </a>
-    <a href="#top" class="contact-link">
-      <span class="cl-type">Location</span>
-      <span class="cl-val">Rotterdam, Netherlands</span>
-    </a>
+<section class="con-sec" id="contact">
+  <div class="con-in">
+    <div class="con-g rev">
+      <div>
+        <div class="con-name">Majak Anyar</div>
+        <div class="con-title">Delivery Manager &middot; CX Operations &middot; BPO Governance &middot; Rotterdam</div>
+        <a href="https://calendly.com/majakanyar2" target="_blank" class="btn-p" style="margin-top:4px;">Book a 30-Min Call &rarr;</a>
+      </div>
+      <div class="con-links">
+        <a href="mailto:majakanyar2@gmail.com" class="con-link"><span class="cl-t">Email</span><span class="cl-v">majakanyar2@gmail.com</span></a>
+        <a href="https://linkedin.com/in/majak2" target="_blank" class="con-link"><span class="cl-t">LinkedIn</span><span class="cl-v">linkedin.com/in/majak2</span></a>
+        <a href="tel:+31619341044" class="con-link"><span class="cl-t">Phone</span><span class="cl-v">+31 6 19 341 044</span></a>
+        <a href="#top" class="con-link"><span class="cl-t">Location</span><span class="cl-v">Rotterdam, Netherlands</span></a>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
-  <div class="footer-name">Majak Anyar</div>
-  <div class="footer-note">L&D Manager · Rotterdam · 2025</div>
+  <div class="f-n">Majak Anyar</div>
+  <div class="f-s">CX Operations &middot; Delivery Management &middot; Rotterdam &middot; 2026</div>
 </footer>
 
 <script>
-// Cursor
-const cur = document.getElementById('cur');
-const curR = document.getElementById('curR');
+const cur=document.getElementById('cur'),curR=document.getElementById('curR');
 let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{ mx=e.clientX; my=e.clientY; cur.style.left=mx+'px'; cur.style.top=my+'px'; });
-(function loop(){ rx+=(mx-rx)*0.1; ry+=(my-ry)*0.1; curR.style.left=rx+'px'; curR.style.top=ry+'px'; requestAnimationFrame(loop); })();
-document.querySelectorAll('a,button,.cs-header').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ cur.style.transform='translate(-50%,-50%) scale(2)'; curR.style.transform='translate(-50%,-50%) scale(1.4)'; });
-  el.addEventListener('mouseleave',()=>{ cur.style.transform='translate(-50%,-50%) scale(1)'; curR.style.transform='translate(-50%,-50%) scale(1)'; });
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
+(function tick(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;curR.style.left=rx+'px';curR.style.top=ry+'px';requestAnimationFrame(tick);})();
+document.querySelectorAll('a,button,.cs-top,.cs-at,.aoe-item,.a-tag,.tc-cell').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.4)';curR.style.transform='translate(-50%,-50%) scale(1.5)';curR.style.opacity='.5';});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';curR.style.transform='translate(-50%,-50%) scale(1)';curR.style.opacity='.25';});
 });
 
-// Case study toggle
-function toggleCS(id){
-  const el = document.getElementById(id);
-  el.classList.toggle('open');
-}
+window.addEventListener('scroll',()=>{document.getElementById('btt').classList.toggle('show',window.scrollY>400);},{passive:true});
 
-// Scroll reveals
-const obs = new IntersectionObserver(entries=>{
+const navObs=new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
-      e.target.classList.add('visible');
-      e.target.querySelectorAll('.skill-fill').forEach(b=>{
-        setTimeout(()=>{ b.style.width=b.dataset.w+'%'; },200);
-      });
+      document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+      const a=document.querySelector(`.nav-links a[data-s="${e.target.id}"]`);
+      if(a)a.classList.add('active');
     }
   });
-},{threshold:0.1});
+},{threshold:.25});
+['cases','aoe','tl','about','contact'].forEach(id=>{const el=document.getElementById(id);if(el)navObs.observe(el);});
 
-document.querySelectorAll('.reveal,.tl-item').forEach(el=>obs.observe(el));
+function tP(id){
+  const el=document.getElementById(id);
+  const wasOpen=el.classList.contains('open');
+  el.classList.toggle('open');
+  if(!wasOpen&&!window['lz_'+id]){window['lz_'+id]=true;setTimeout(()=>lazyC(id),80);}
+}
+function tA(id){tP(id);}
+function swT(cs,tab){
+  const el=document.getElementById(cs);
+  const tabs=['story','rca','cb','log'];
+  el.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.querySelectorAll('.tp').forEach(p=>p.classList.remove('on'));
+  el.querySelectorAll('.tab')[tabs.indexOf(tab)]?.classList.add('on');
+  document.getElementById(cs+'-'+tab)?.classList.add('on');
+}
 
-// Animate skill bars on load too
-setTimeout(()=>{
-  document.querySelectorAll('.skill-fill').forEach(b=>{ b.style.width=b.dataset.w+'%'; });
-},600);
+const AC='#C4622D',AL='#D4744A',AB='rgba(196,98,45,.07)';
+const F={family:"'Inter',system-ui,sans-serif",size:10};
+const NG={display:false};
+const TT={backgroundColor:'#2C1810',titleFont:F,bodyFont:{...F,size:11},padding:10,cornerRadius:2,boxPadding:3};
+function mk(id,type,data,opts={}){
+  const el=document.getElementById(id);if(!el||el._chart)return;
+  const base={responsive:true,maintainAspectRatio:true,animation:{duration:680,easing:'easeOutQuart'},interaction:{mode:'index',intersect:false},
+    plugins:{legend:{labels:{font:F,color:'#7A5C4A',boxWidth:8,padding:8}},tooltip:TT},
+    scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}}}};
+  if(opts.plugins){base.plugins={...base.plugins,...opts.plugins};delete opts.plugins;}
+  if(opts.scales){base.scales={...base.scales,...opts.scales};delete opts.scales;}
+  Object.assign(base,opts);
+  el._chart=new Chart(el,{type,data,options:base});
+}
+
+const T1B=['418s &mdash; agents improvising through objections, adding 60-90s per call.','420s &mdash; end-of-month volume spike.','422s &mdash; peak pre-launch. Trigger for redesign escalation to leadership.','416s &mdash; informal supervisor coaching began.','405s &mdash; launch week. New call flow introduced. First measurable drop.','390s &mdash; agents internalising the framework.','378s &mdash; consistent improvement. Post-call coaching reinforcing gains.','370s &mdash; 50-second net reduction achieved.'];
+const T2A=['74% &mdash; pre-redesign. Wrong CRM navigation causing failures on 31% of calls.','73% &mdash; dip. High-volume hiring week diluting average.','74% &mdash; stable. QA confirmed 3 failure types driving 76% of all complaints.','75% &mdash; marginal uptick. Informal supervisor empathy reminders.','78% &mdash; relaunch month. QA-based scenarios and system replicas deployed.','81% &mdash; system navigation errors reduced 40%.','83% &mdash; sustained. Nesting coaching catching regression early.','84% &mdash; plateau before further optimisation. Model later adopted globally.'];
+const T3A=['68% &mdash; pre-intervention. Calls described as robotic in IVR feedback.','67% &mdash; seasonal volume stretched experienced agents.','68% &mdash; stable. QA audit complete, framework designed.','71% &mdash; framework launch. Acknowledgment scripts distributed.','73% &mdash; agents internalising pause-acknowledge-resolve structure.','75% &mdash; post-call coaching reinforcing specific acknowledgment failures.','76% &mdash; 8pp net improvement. Complaint volume down 22%.'];
+const ATTR=[18,21,19,23,21,17,19,15,16,14];
+const AT=['18% &mdash; baseline. High day-7 leavers &mdash; inadequate floor preparation.','21% &mdash; spike. Intake with no prior contact centre experience. No readiness gate.','19% &mdash; slight recovery. Supervisor increased informal shadowing.','23% &mdash; peak. 180 starters in 3 weeks overwhelmed the informal system. Triggered rebuild.','21% &mdash; rebuild launched mid-month. Effects not yet visible in full-month data.','17% &mdash; first drop. Readiness assessments identifying at-risk agents before floor.','19% &mdash; uptick. Second-largest intake wave. SOP not yet fully adopted.','15% &mdash; normalising. 100% SOP adoption.','16% &mdash; marginal uptick. Holiday period reduced coaching availability.','14% &mdash; structural attrition addressed. Voluntary leavers now primary driver.'];
+const NEST=[76,79,74,82,85,81,88,91,87,94];
+const NT=['76% &mdash; G1. Assessors calibrating pass/fail thresholds.','79% &mdash; G2. Two supervisors still inconsistently applying criteria.','74% &mdash; G3 dip. Supervisor substitution mid-nesting.','82% &mdash; G4 recovery. Full supervisor calibration session held.','85% &mdash; G5. Strong cohort with prior contact centre experience.','81% &mdash; G6 dip. Language barrier in one sub-cohort. Extra coaching added.','88% &mdash; G7. Cross-functional review cadence well-established.','91% &mdash; G8. Coaching model maturing. Weekly L&amp;D-Ops data sharing.','87% &mdash; G9 dip. New CRM version mid-nesting &mdash; unplanned refresh required.','94% &mdash; G10. Target achieved. Model submitted for global rollout.'];
+
+function animCount(el){
+  if(el._counted)return;el._counted=true;
+  const tgt=parseInt(el.dataset.target||'0');
+  const pfx=el.dataset.prefix||'';const sfx=el.dataset.suffix||'';
+  if(isNaN(tgt))return;
+  let start=null;
+  function step(ts){
+    if(!start)start=ts;
+    const p=Math.min((ts-start)/820,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=pfx+Math.round(tgt*e).toLocaleString()+sfx;
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=pfx+tgt.toLocaleString()+sfx;
+  }
+  requestAnimationFrame(step);
+}
+const cntObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.m-num[data-target]').forEach(n=>animCount(n));cntObs.unobserve(e.target);}});
+},{threshold:.4});
+const mc=document.querySelector('.mcard');if(mc)cntObs.observe(mc);
+
+window.addEventListener('load',()=>{
+  mk('c1a','bar',{labels:['Conversion','Overall Sales','Call Efficiency'],datasets:[{label:'Before',data:[100,100,100],backgroundColor:'rgba(122,92,74,.14)',borderWidth:0},{label:'After',data:[110,113,114],backgroundColor:AC,borderWidth:0}]},{plugins:{tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+(c.raw===100?'Baseline':'+'+((c.raw-100))+'%')}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:90,ticks:{font:F,color:'#7A5C4A',callback:v=>v===100?'Base':v+'%'},grid:NG,border:{display:false}}}});
+  mk('c1b','line',{labels:['Wk1','Wk2','Wk3','Wk4','Launch','Wk6','Wk7','Wk8'],datasets:[{label:'AHT',data:[418,420,422,416,405,390,378,370],borderColor:AC,backgroundColor:AB,tension:.4,pointBackgroundColor:['#7A5C4A','#7A5C4A','#7A5C4A','#7A5C4A',AC,AC,AC,AC],pointRadius:[3,3,3,3,6,3,3,3],borderWidth:1.5,fill:true}]},{plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label+' &mdash; '+c[0].raw+'s',label:()=>'',afterBody:c=>[T1B[c[0].dataIndex]]}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:350,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'s'},grid:NG,border:{display:false}}}});
+  mk('c2a','line',{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug'],datasets:[{label:'CSAT',data:[74,73,74,75,78,81,83,84],borderColor:AC,backgroundColor:AB,tension:.4,pointBackgroundColor:['#7A5C4A','#7A5C4A','#7A5C4A','#7A5C4A',AC,AC,AC,AC],pointRadius:[3,3,3,3,6,3,3,3],borderWidth:1.5,fill:true}]},{plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label+' &mdash; '+c[0].raw+'%',label:()=>'',afterBody:c=>[T2A[c[0].dataIndex]]}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:66,max:90,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}}}});
+  const pv2=[31,23,22,12,7,5];const pc2=[];let s2=0;pv2.forEach(v=>{s2+=v;pc2.push(s2);});
+  mk('c2b','bar',{labels:['No POD screen','Escalation avoid','Low FCR billing','Override hold','No acknowledgment','Other'],datasets:[{label:'% failures',data:pv2,backgroundColor:[AC,AC,AC,AL,AL,'rgba(122,92,74,.18)'],borderWidth:0,yAxisID:'y'},{label:'Cumulative',data:pc2,type:'line',borderColor:'#2C1810',backgroundColor:'transparent',pointBackgroundColor:'#2C1810',pointRadius:3,borderWidth:1,yAxisID:'y2',tension:0}]},{plugins:{tooltip:{...TT,callbacks:{label:c=>c.datasetIndex===0?c.raw+'% of failures':'Cumulative: '+c.raw+'%'}}},scales:{x:{ticks:{font:{...F,size:9},color:'#7A5C4A',maxRotation:0},grid:NG,border:{display:false}},y:{max:38,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}},y2:{position:'right',max:110,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}}}});
+  mk('c3a','line',{labels:['M1','M2','M3','M4','M5','M6','M7'],datasets:[{label:'Sentiment',data:[68,67,68,71,73,75,76],borderColor:AC,backgroundColor:AB,tension:.4,pointBackgroundColor:['#7A5C4A','#7A5C4A','#7A5C4A',AC,AC,AC,AC],pointRadius:[3,3,3,6,3,3,3],borderWidth:1.5,fill:true}]},{plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label+' &mdash; '+c[0].raw+'%',label:()=>'',afterBody:c=>[T3A[c[0].dataIndex]]}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:60,max:82,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}}}});
+  const pv3=[36,29,18,11,6];const pc3=[];let s3=0;pv3.forEach(v=>{s3+=v;pc3.push(s3);});
+  mk('c3b','bar',{labels:['No acknowledgment','Scripted tone','Sub-3min close','Wrong transfer','Other'],datasets:[{label:'% complaints',data:pv3,backgroundColor:[AC,AC,AC,AL,'rgba(122,92,74,.18)'],borderWidth:0,yAxisID:'y'},{label:'Cumulative',data:pc3,type:'line',borderColor:'#2C1810',backgroundColor:'transparent',pointBackgroundColor:'#2C1810',pointRadius:3,borderWidth:1,yAxisID:'y2',tension:0}]},{plugins:{tooltip:{...TT,callbacks:{label:c=>c.datasetIndex===0?c.raw+'% of complaints':'Cumulative: '+c.raw+'%'}}},scales:{x:{ticks:{font:{...F,size:9},color:'#7A5C4A',maxRotation:0},grid:NG,border:{display:false}},y:{max:45,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}},y2:{position:'right',max:110,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}}}});
+  mk('c4a','line',{labels:['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10'],datasets:[{label:'Attrition',data:ATTR,borderColor:AC,backgroundColor:AB,tension:.4,pointBackgroundColor:ATTR.map((v,i)=>i===3?'#fff':AC),pointBorderColor:AC,pointRadius:ATTR.map((v,i)=>i===3?7:3),borderWidth:1.5,fill:true}]},{plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label+' &mdash; '+c[0].raw+'% attrition',label:()=>'',afterBody:c=>[AT[c[0].dataIndex]]}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:8,max:28,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}}}});
+  mk('c4b','bar',{labels:['G1','G2','G3','G4','G5','G6','G7','G8','G9','G10'],datasets:[{label:'Pass Rate',data:NEST,backgroundColor:NEST.map(v=>v>=88?AC:v>=80?AL:'rgba(122,92,74,.2)'),borderWidth:0}]},{plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>'Group '+(c[0].dataIndex+1)+' &mdash; '+c[0].raw+'%',label:()=>'',afterBody:c=>[NT[c[0].dataIndex]]}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:60,max:100,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}}}});
+  mk('c5a','bar',{labels:['Before','Group A','Group B','Group C','Group D'],datasets:[{label:'Weeks',data:[6.0,5.2,4.8,4.1,3.5],backgroundColor:['rgba(122,92,74,.2)',AL,AL,AC,AC],borderWidth:0}]},{indexAxis:'y',plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label,label:c=>c.raw+' weeks',afterBody:c=>{const n=['6-week baseline. 40% of content unused in first 30 days.','0.8-week improvement. Coaches calibrating nesting criteria.','Regression. Supervisor change mid-nesting broke coaching cadence.','Strong result. Kirkpatrick L3 confirmed behaviour transfer in week 2.','3.5-week target achieved. 42% reduction vs baseline.'];return[n[c[0].dataIndex]||''];}}}},scales:{x:{min:0,max:7,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'wk'},grid:NG,border:{display:false}},y:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}}}});
+  mk('c5b','line',{labels:['Wk1','Wk2','Wk3','Wk4','Redesign','Wk6','Wk7','Wk8'],datasets:[{label:'Before',data:[12,13,11,12,null,null,null,null],borderColor:'rgba(122,92,74,.35)',backgroundColor:'transparent',tension:.3,pointRadius:3,borderWidth:1.2,borderDash:[4,3]},{label:'After',data:[null,null,null,null,10,8,9,7],borderColor:AC,backgroundColor:AB,tension:.4,pointBackgroundColor:AC,pointRadius:[0,0,0,0,5,4,4,4],borderWidth:1.5,fill:true}]},{plugins:{tooltip:{...TT,callbacks:{afterBody:c=>{const n={4:'Launch. 10% &mdash; immediate improvement with simulation practice.',5:'8% &mdash; structured call flow reducing improvised steps.',6:'9% &mdash; uptick. Small group missed new programme. Corrected.',7:'7% &mdash; lowest recorded.'};return[n[c[0].dataIndex]||''];}}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:0,max:16,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}}}});
+  mk('c6a','bar',{labels:['Q1 Pre','Q2 Pre','Q1 Post','Q2 Post','Q3 Post','Q4 Post'],datasets:[{label:'Cost index',data:[100,103,82,74,68,62],backgroundColor:['rgba(122,92,74,.2)','rgba(122,92,74,.2)',AL,AC,AC,AC],borderWidth:0}]},{plugins:{legend:{display:false},tooltip:{...TT,callbacks:{label:c=>c.raw===100?'Baseline':c.raw<100?(c.raw-100)+'% vs baseline':('+'+((c.raw-100))+'%'),afterBody:c=>{const n={0:'Full classroom. 100% trainer time per head.',1:'Q2 slight increase &mdash; volume surge required more trainer hires.',2:'Q1 post-digital. 18% reduction. First 30 modules live.',3:'Q2. 56 modules. Self-paced handling 60% of onboarding hours.',4:'Q3. 68 modules. Blended model fully embedded.',5:'Q4. 72 modules. 40% permanent reduction achieved.'};return[n[c[0].dataIndex]||''];}}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:40,ticks:{font:F,color:'#7A5C4A',callback:v=>v===100?'Base':v},grid:NG,border:{display:false}}}});
+  mk('c6b','line',{labels:['M1','M2','M3','M4','M5','M6','M7','M8'],datasets:[{label:'Modules',data:[4,11,22,35,48,57,65,72],borderColor:AC,backgroundColor:AB,tension:.4,pointBackgroundColor:AC,pointRadius:4,borderWidth:1.5,fill:true}]},{plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label+' &mdash; '+c[0].raw+' modules',label:()=>'',afterBody:c=>{const n=['4 modules. Foundation content. Highest complexity prioritised first.','11 modules. Product knowledge suite. Replacing 2 classroom days.','22 modules. Call handling simulations. Avg build time 3.5 days.','35 modules. Sales scenarios and objection-handling library.','48 modules. Nesting refreshers. 3 modules rebuilt from usage data.','57 modules. Cross-account variants developed.','65 modules. Train-the-trainer completed. LMS completion rate 94%.','72 modules. Full library live. 40% cost reduction achieved.'];return[n[c[0].dataIndex]||''];}}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{min:0,ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}}}});
+});
+
+function lazyC(id){
+  if(id==='cs4'){
+    const vs=[31,24,21,15,9];const cm=[];let s=0;vs.forEach(v=>{s+=v;cm.push(s);});
+    mk('c4p','bar',{labels:['No nesting SOP','No training assessment','L&amp;D-Ops gap','QA not feeding L&amp;D','Day-1 ghosting'],datasets:[{label:'% of attrition',data:vs,backgroundColor:[AC,AC,AC,AL,'rgba(122,92,74,.2)'],borderWidth:0,yAxisID:'y'},{label:'Cumulative',data:cm,type:'line',borderColor:'#2C1810',backgroundColor:'transparent',pointBackgroundColor:'#2C1810',pointRadius:3,borderWidth:1,yAxisID:'y2',tension:0}]},{plugins:{tooltip:{...TT,callbacks:{label:c=>c.datasetIndex===0?c.raw+'% of attrition':'Cumulative: '+c.raw+'%'}}},scales:{x:{ticks:{font:{...F,size:9},color:'#7A5C4A',maxRotation:0},grid:NG,border:{display:false}},y:{max:38,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}},y2:{position:'right',max:110,ticks:{font:F,color:'#7A5C4A',callback:v=>v+'%'},grid:NG,border:{display:false}}}});
+  }
+}
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('vis');
+      e.target.querySelectorAll('.sk-fill').forEach(b=>{setTimeout(()=>{b.style.width=b.dataset.w+'%';},180);});
+    }
+  });
+},{threshold:.08});
+document.querySelectorAll('.rev,.tl-i').forEach(el=>obs.observe(el));
 </script>
 </body>
 </html>
