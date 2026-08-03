@@ -250,14 +250,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .tools-g{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--sd);margin-bottom:1px;}
 .tc-cell{background:var(--wh);padding:10px 7px;text-align:center;font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--mu);transition:all .18s;}
 .tc-cell:hover{background:var(--tc);color:#fff;}
-.lang-row{display:flex;align-items:center;padding:8px 0;border-bottom:1px solid var(--sd);gap:10px;}
-.lang-row:last-child{border-bottom:none;}
-.lang-nm{font-size:12px;color:var(--tx);width:54px;flex-shrink:0;}
-.lang-pr{font-size:11px;color:var(--mu);}
-.lang-dots{display:flex;gap:3px;margin-left:auto;}
-.ld{width:5px;height:5px;border-radius:50%;background:var(--sd);}
-.ld.on{background:var(--tc);}
-.ld.h{background:var(--tc);opacity:.4;}
+/* Individually-bordered rows with gap spacing instead of shared
+   border-bottom dividers — same "no shared lines between siblings"
+   principle applied to the tags/cards elsewhere on the page. Proficiency
+   now reads as a filled bar rather than five small dots, which scales
+   better at a glance than counting dots. */
+.lang-list{display:flex;flex-direction:column;gap:10px;}
+.lang-row{display:flex;align-items:center;gap:12px;padding:12px 14px;background:var(--wh);border:1px solid var(--sd);border-radius:10px;}
+.lang-nm{font-size:12.5px;font-weight:600;color:var(--tx);width:80px;flex-shrink:0;}
+.lang-pr{font-size:11px;color:var(--mu);flex-shrink:0;width:100px;}
+.lang-bar{flex:1;height:4px;border-radius:99px;background:var(--sd);overflow:hidden;margin-left:auto;max-width:90px;}
+.lang-fill{height:100%;border-radius:99px;background:var(--tc);}
 
 /* CONTACT */
 .con-sec{background:var(--es);padding:72px 0;}
@@ -680,17 +683,18 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
         <div class="sk-row"><span class="sk-nm">Data Analysis &amp; KPI Management</span><div class="sk-bar"><div class="sk-fill" data-w="80"></div></div></div>
         <div style="margin-top:26px;">
           <div class="sg-l">Languages</div>
-          <div class="lang-row"><span class="lang-nm">Arabic</span><span class="lang-pr">Native</span><div class="lang-dots"><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div></div></div>
-          <div class="lang-row"><span class="lang-nm">English</span><span class="lang-pr">Fluent</span><div class="lang-dots"><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld on"></div><div class="ld"></div></div></div>
-          <div class="lang-row"><span class="lang-nm">Dutch</span><span class="lang-pr">Conversational</span><div class="lang-dots"><div class="ld on"></div><div class="ld h"></div><div class="ld"></div><div class="ld"></div><div class="ld"></div></div></div>
+          <div class="lang-list">
+            <div class="lang-row"><span class="lang-nm">Arabic</span><span class="lang-pr">Native</span><div class="lang-bar"><div class="lang-fill" style="width:100%;"></div></div></div>
+            <div class="lang-row"><span class="lang-nm">English</span><span class="lang-pr">Fluent</span><div class="lang-bar"><div class="lang-fill" style="width:80%;"></div></div></div>
+            <div class="lang-row"><span class="lang-nm">Dutch</span><span class="lang-pr">Conversational</span><div class="lang-bar"><div class="lang-fill" style="width:35%;"></div></div></div>
+          </div>
         </div>
       </div>
       <div>
         <div class="sg-l">Tools &amp; Platforms</div>
         <div class="tools-g">
-          <div class="tc-cell">Articulate 360</div><div class="tc-cell">Rise 360</div><div class="tc-cell">Storyline</div><div class="tc-cell">SuccessFactors</div>
-          <div class="tc-cell">Salesforce CRM</div><div class="tc-cell">Power BI</div><div class="tc-cell">Kahoot</div><div class="tc-cell">Mentimeter</div>
-          <div class="tc-cell">MS Teams</div><div class="tc-cell">Google Suite</div><div class="tc-cell">Quizlet</div><div class="tc-cell">Arcade</div>
+          <div class="tc-cell">Power BI</div><div class="tc-cell">Power Automate</div><div class="tc-cell">Salesforce CRM</div><div class="tc-cell">WFM Tools</div>
+          <div class="tc-cell">Medallia</div><div class="tc-cell">Qualtrics</div><div class="tc-cell">MS Teams</div><div class="tc-cell">Google Suite</div>
         </div>
         <div class="a-card" style="margin-top:1px;">
           <div class="a-row"><span class="a-key">Evaluation</span><span class="a-val">Kirkpatrick L1&ndash;L4</span></div>
