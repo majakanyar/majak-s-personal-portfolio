@@ -89,14 +89,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .mcard{background:var(--wh);border:1px solid var(--sd);}
 .mcard-hd{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);padding:11px 16px;border-bottom:1px solid var(--sd);}
 .metrics-row{display:grid;grid-template-columns:repeat(5,1fr);}
-.m-cell{padding:20px 14px 18px;position:relative;}
-/* Inset divider (doesn't touch the card's top/bottom edge) instead of a
-   full-height border-left — reads as a quiet separator, not another line
-   competing with the outer card border. nth-child keyed to the actual
-   column count at each breakpoint (not DOM sibling order) so a cell that
-   wraps to a new row never inherits a stray left divider from its column
-   position at a wider breakpoint. */
-.m-cell:not(:nth-child(5n+1))::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--sd);}
+/* No internal vertical dividers — separation comes from padding alone,
+   matching the reference design's whitespace-only column separation
+   instead of a line-per-column look. */
+.m-cell{padding:20px 18px 18px;position:relative;}
 .m-num{font-family:var(--sf);font-size:26px;font-weight:700;color:var(--tc);line-height:1;margin-bottom:5px;min-height:32px;}
 .m-lbl{font-size:11px;font-weight:600;color:var(--es);margin-bottom:3px;line-height:1.25;}
 .m-sub{font-size:10px;color:var(--mu);line-height:1.4;}
@@ -105,8 +101,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .icard{background:var(--wh);border:1px solid var(--sd);}
 .icard-hd{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);padding:11px 16px;border-bottom:1px solid var(--sd);}
 .ind-row{display:grid;grid-template-columns:repeat(6,1fr);}
-.ind-item{padding:16px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;transition:background .18s;}
-.ind-item:not(:nth-child(6n+1))::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:1px;background:var(--sd);}
+.ind-item{padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;transition:background .18s;}
 .ind-item:hover{background:var(--cr);}
 .ind-svg{width:20px;height:20px;stroke:var(--mu);fill:none;stroke-width:1.5;opacity:.55;transition:opacity .18s;}
 .ind-item:hover .ind-svg{opacity:.9;stroke:var(--tc);}
@@ -126,7 +121,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .cs-card{background:var(--wh);border:1px solid var(--sd);border-radius:14px;overflow:hidden;transition:border-color .2s,box-shadow .2s;}
 .cs-card:hover{border-color:rgba(196,98,45,.3);box-shadow:0 6px 24px rgba(44,24,16,.06);}
 .cs-top{display:grid;grid-template-columns:48px 1fr 148px;cursor:pointer;}
-.cs-n-col{display:flex;align-items:flex-start;justify-content:center;padding:22px 0;border-right:1px solid var(--sd);}
+.cs-n-col{display:flex;align-items:flex-start;justify-content:center;padding:22px 0;}
 .cs-n{font-family:var(--sf);font-size:24px;font-weight:700;color:var(--sd);transition:color .2s;}
 .cs-card.open .cs-n{color:var(--tc);}
 .cs-body{padding:20px 22px;}
@@ -135,7 +130,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .cs-tag-s{background:rgba(92,61,46,.06);color:var(--mu);}
 .cs-title{font-family:var(--sf);font-size:18px;font-weight:700;color:var(--es);margin-bottom:5px;line-height:1.2;}
 .cs-hook{font-size:12px;color:var(--mu);line-height:1.6;max-width:560px;}
-.cs-kpi-col{padding:20px 16px;border-left:1px solid var(--sd);display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;}
+.cs-kpi-col{padding:20px 16px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;}
 .cs-kpis{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
 .kv{font-family:var(--sf);font-size:19px;font-weight:700;color:var(--tc);line-height:1;}
 .kl{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);}
@@ -287,12 +282,8 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
   .hero-l{padding:88px 24px 52px;border-right:none;border-bottom:1px solid var(--sd);}
   .hero-r{padding:36px 24px;}
   .metrics-row{grid-template-columns:repeat(3,1fr);}
-  .m-cell::before{display:none;}
-  .m-cell:not(:nth-child(3n+1))::before{display:block;}
   .m-cell:nth-child(n+4){border-top:1px solid var(--sd);}
   .ind-row{grid-template-columns:repeat(3,1fr);}
-  .ind-item::before{display:none;}
-  .ind-item:not(:nth-child(3n+1))::before{display:block;}
   .ind-item:nth-child(n+4){border-top:1px solid var(--sd);}
   .about-g,.con-g,.sk-g{grid-template-columns:1fr;}
   .aoe-grid{grid-template-columns:1fr 1fr;}
