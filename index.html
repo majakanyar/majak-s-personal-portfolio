@@ -208,8 +208,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .about-g{display:grid;grid-template-columns:1.15fr .85fr;gap:64px;align-items:start;}
 .a-lead{font-family:var(--sf);font-size:19px;font-weight:600;color:var(--es);line-height:1.6;margin-bottom:14px;}
 .a-body{font-size:13px;color:var(--mu);line-height:1.85;margin-bottom:22px;}
-.a-tags{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--sd);}
-.a-tag{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);padding:6px 11px;border-right:1px solid var(--sd);border-bottom:1px solid var(--sd);transition:all .18s;}
+/* Individual pill tags (matches .cs-tag elsewhere on the page) instead of
+   a shared-border flex-wrap grid — that layout gave every tag its own
+   border-right/border-bottom inside one outer border, which only lines up
+   into a clean grid when every row happens to fill completely. Any row
+   that wraps with fewer tags (e.g. a lone tag on the last line) left a
+   large empty bordered box next to it, reading as a broken table. */
+.a-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.a-tag{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);padding:6px 12px;border:1px solid var(--sd);border-radius:99px;transition:all .18s;}
 .a-tag:hover{background:var(--tc);color:#fff;border-color:var(--tc);}
 .a-card{border:1px solid var(--sd);background:var(--wh);}
 .a-row{display:flex;justify-content:space-between;align-items:flex-start;padding:12px 16px;border-bottom:1px solid var(--sd);}
