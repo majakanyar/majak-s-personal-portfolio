@@ -86,26 +86,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .hero-r{background:var(--cr);padding:56px 40px;display:flex;flex-direction:column;gap:14px;justify-content:center;}
 
 /* METRICS CARD */
-.mcard{background:var(--wh);border:1px solid var(--sd);}
+.mcard{background:var(--wh);border:1px solid var(--sd);overflow:hidden;}
 .mcard-hd{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);padding:11px 16px;border-bottom:1px solid var(--sd);}
-.metrics-row{display:grid;grid-template-columns:repeat(5,1fr);}
+.metrics-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));}
 /* No internal vertical dividers - separation comes from padding alone,
    matching the reference design's whitespace-only column separation
-   instead of a line-per-column look. */
-.m-cell{padding:20px 18px 18px;position:relative;}
+   instead of a line-per-column look. minmax(0,1fr) (not plain 1fr) keeps
+   columns from expanding past the card to fit a cell's min-content width. */
+.m-cell{padding:20px 18px 18px;position:relative;min-width:0;}
 .m-num{font-family:var(--sf);font-size:26px;font-weight:700;color:var(--tc);line-height:1;margin-bottom:5px;min-height:32px;}
 .m-lbl{font-size:11px;font-weight:600;color:var(--es);margin-bottom:3px;line-height:1.25;}
 .m-sub{font-size:10px;color:var(--mu);line-height:1.4;}
 
 /* INDUSTRIES CARD */
-.icard{background:var(--wh);border:1px solid var(--sd);}
+.icard{background:var(--wh);border:1px solid var(--sd);overflow:hidden;}
 .icard-hd{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);padding:11px 16px;border-bottom:1px solid var(--sd);}
-.ind-row{display:grid;grid-template-columns:repeat(6,1fr);}
-.ind-item{padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;transition:background .18s;}
+.ind-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));}
+.ind-item{padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;min-width:0;transition:background .18s;}
 .ind-item:hover{background:var(--cr);}
 .ind-svg{width:20px;height:20px;stroke:var(--mu);fill:none;stroke-width:1.5;opacity:.55;transition:opacity .18s;}
 .ind-item:hover .ind-svg{opacity:.9;stroke:var(--tc);}
-.ind-nm{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);}
+.ind-nm{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
 
 /* SHARED SECTION STYLES */
 .sec{padding:72px 0;}
