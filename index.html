@@ -101,12 +101,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 /* INDUSTRIES CARD */
 .icard{background:var(--wh);border:1px solid var(--sd);overflow:hidden;}
 .icard-hd{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--mu);padding:11px 16px;border-bottom:1px solid var(--sd);}
-.ind-row{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));}
-.ind-item{padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;min-width:0;transition:background .18s;}
+/* 3 columns x 2 rows (not 6x1) - 6 across left no room for names like
+   "Consumer Tech"/"E-Commerce", forcing either ellipsis truncation or
+   overflow past the card. 3 columns gives each label 2x the width. */
+.ind-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));}
+.ind-item{padding:18px 10px;display:flex;flex-direction:column;align-items:center;gap:7px;position:relative;min-width:0;transition:background .18s;border-bottom:1px solid var(--sd);}
+.ind-item:nth-child(n+4){border-bottom:none;}
 .ind-item:hover{background:var(--cr);}
 .ind-svg{width:20px;height:20px;stroke:var(--mu);fill:none;stroke-width:1.5;opacity:.55;transition:opacity .18s;}
 .ind-item:hover .ind-svg{opacity:.9;stroke:var(--tc);}
-.ind-nm{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;}
+.ind-nm{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mu);text-align:center;white-space:normal;max-width:100%;line-height:1.35;}
 
 /* SHARED SECTION STYLES */
 .sec{padding:72px 0;}
@@ -131,13 +135,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .cs-tag-s{background:rgba(92,61,46,.06);color:var(--mu);}
 .cs-title{font-family:var(--sf);font-size:18px;font-weight:700;color:var(--es);margin-bottom:5px;line-height:1.2;}
 .cs-hook{font-size:12px;color:var(--mu);line-height:1.6;max-width:560px;}
-.cs-kpi-col{padding:20px 16px;display:flex;flex-direction:column;justify-content:space-between;align-items:flex-end;}
-.cs-kpis{display:flex;flex-direction:column;gap:6px;align-items:flex-end;}
+.cs-kpi-col{padding:22px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;}
+.cs-kpis{display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
 .kv{font-family:var(--sf);font-size:19px;font-weight:700;color:var(--tc);line-height:1;}
-.kl{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);}
-.cs-more{display:flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--tc);}
-.cs-arr{transition:transform .3s;}
-.cs-card.open .cs-arr{transform:rotate(180deg);}
+.kl{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);margin-top:3px;}
 
 /* CHARTS always visible */
 .cs-charts{padding:0 22px 18px;background:var(--cr);}
@@ -294,8 +295,6 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
   .hero-r{padding:36px 24px;}
   .metrics-row{grid-template-columns:repeat(3,1fr);}
   .m-cell:nth-child(n+4){border-top:1px solid var(--sd);}
-  .ind-row{grid-template-columns:repeat(3,1fr);}
-  .ind-item:nth-child(n+4){border-top:1px solid var(--sd);}
   .about-g,.con-g,.sk-g{grid-template-columns:1fr;}
   .aoe-grid{grid-template-columns:1fr 1fr;}
   .aoe-item:nth-child(n+3){border-top:1px solid var(--sd);}
@@ -448,7 +447,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
           </div>
           <div class="cs-kpi-col">
             <div class="cs-kpis"><div><div class="kv">+10%</div><div class="kl">Conversion</div></div><div><div class="kv">+13%</div><div class="kl">Sales</div></div><div><div class="kv">&minus;50s</div><div class="kl">AHT</div></div></div>
-            <div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div>
+            
           </div>
         </div>
         <div class="cs-charts">
@@ -474,7 +473,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
         <div class="cs-top" onclick="tP('cs2')">
           <div class="cs-n-col"><div class="cs-n">02</div></div>
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Global Logistics</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Market</span></div><div class="cs-title">Post-Training Performance Gap - Global Logistics Account</div><div class="cs-hook">Agents completing onboarding and arriving on the floor underprepared. CSAT below target, system usage poor. The nesting model developed here was subsequently adopted globally by the client.</div></div>
-          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">+9pp</div><div class="kl">CSAT</div></div><div><div class="kv">+25%</div><div class="kl">System Usage</div></div><div><div class="kv">Global</div><div class="kl">Rollout</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">+9pp</div><div class="kl">CSAT</div></div><div><div class="kv">+25%</div><div class="kl">System Usage</div></div><div><div class="kv">Global</div><div class="kl">Rollout</div></div></div></div>
         </div>
         <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">CSAT Score - Monthly Trend (%)</div><div class="cc-ins">CSAT recovered two months after relaunch and continued improving as the nesting model matured.</div><canvas id="c2a"></canvas></div><div class="cc"><div class="cc-lbl">Pareto - Top CSAT Failure Causes</div><div class="cc-ins">Top 3 causes drove 76% of all CSAT failures. Intervention targeted these three exclusively.</div><canvas id="c2b"></canvas></div></div></div>
         <div class="cs-at" onclick="tA('cs2')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
@@ -490,7 +489,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
         <div class="cs-top" onclick="tP('cs3')">
           <div class="cs-n-col"><div class="cs-n">03</div></div>
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">US Healthcare</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; EMEA</span></div><div class="cs-title">Empathy Framework Implementation - Healthcare CX Account</div><div class="cs-hook">Agents resolving issues correctly but failing on customer sentiment. Technically competent, emotionally flat. A purpose-built empathy framework closed an 8-point sentiment gap in three months and was embedded in standard onboarding.</div></div>
-          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">+8pp</div><div class="kl">Sentiment</div></div><div><div class="kv">&minus;22%</div><div class="kl">Complaints</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">+8pp</div><div class="kl">Sentiment</div></div><div><div class="kv">&minus;22%</div><div class="kl">Complaints</div></div></div></div>
         </div>
         <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Customer Sentiment - Monthly Trend (%)</div><div class="cc-ins">Sentiment improved significantly after framework launch. Sustained - not a one-month spike.</div><canvas id="c3a"></canvas></div><div class="cc"><div class="cc-lbl">Pareto - Top Causes of Negative Sentiment</div><div class="cc-ins">"No acknowledgment" and "scripted tone" drove 65% of negative feedback. Both targeted directly.</div><canvas id="c3b"></canvas></div></div></div>
         <div class="cs-at" onclick="tA('cs3')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
@@ -506,7 +505,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
         <div class="cs-top" onclick="tP('cs4')">
           <div class="cs-n-col"><div class="cs-n">04</div></div>
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">BPO Operations</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; EMEA Scale-Up</span></div><div class="cs-title">New Hire Ramp-Up Programme - Large-Scale BPO Expansion</div><div class="cs-hook">1,500 to 2,200 headcount in 10 months. Training system already failing before scale began. Foundations rebuilt first - 700 people onboarded with no measurable impact on live account performance.</div></div>
-          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">700</div><div class="kl">Onboarded</div></div><div><div class="kv">&minus;20%</div><div class="kl">Attrition</div></div><div><div class="kv">94%</div><div class="kl">Pass Rate</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">700</div><div class="kl">Onboarded</div></div><div><div class="kv">&minus;20%</div><div class="kl">Attrition</div></div><div><div class="kv">94%</div><div class="kl">Pass Rate</div></div></div></div>
         </div>
         <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Early Attrition Rate - Monthly (%)</div><div class="cc-ins">Peaked at 23% in month 4 - the trigger for the rebuild. Declined overall with natural variance from intake surges.</div><canvas id="c4a"></canvas></div><div class="cc"><div class="cc-lbl">Nesting Pass Rate by Starter Group (%)</div><div class="cc-ins">Improved across 10 groups with realistic dips from supervisor changes and system updates. Hover each bar.</div><canvas id="c4b"></canvas></div></div></div>
         <div class="cs-at" onclick="tA('cs4')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
@@ -522,7 +521,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
         <div class="cs-top" onclick="tP('cs5')">
           <div class="cs-n-col"><div class="cs-n">05</div></div>
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Operational Readiness</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Account</span></div><div class="cs-title">Onboarding Optimisation - Speed-to-Proficiency Reduction</div><div class="cs-hook">A 6-week programme running unchanged because nobody had questioned it against performance data. Kirkpatrick L1&ndash;L4 audit found 40% of classroom time covered content agents never used. Time to proficiency dropped from 6 to 3.5 weeks.</div></div>
-          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">&minus;42%</div><div class="kl">Ramp Time</div></div><div><div class="kv">&minus;15%</div><div class="kl">Error Rate</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">&minus;42%</div><div class="kl">Ramp Time</div></div><div><div class="kv">&minus;15%</div><div class="kl">Error Rate</div></div></div></div>
         </div>
         <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Time to Full Performance by Cohort (Weeks)</div><div class="cc-ins">Each cohort ramped faster as the programme matured. 3.5-week target achieved by Group D.</div><canvas id="c5a"></canvas></div><div class="cc"><div class="cc-lbl">Error Rate - Before vs After Redesign (%)</div><div class="cc-ins">Error rate dropped post-redesign with one uptick in Week 7 from a small group who missed the new programme.</div><canvas id="c5b"></canvas></div></div></div>
         <div class="cs-at" onclick="tA('cs5')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
@@ -538,7 +537,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
         <div class="cs-top" onclick="tP('cs6')">
           <div class="cs-n-col"><div class="cs-n">06</div></div>
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Business Transformation</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Account &middot; EMEA</span></div><div class="cs-title">L&amp;D Digital Transformation - Classroom-to-eLearning Migration</div><div class="cs-hook">Every session required a trainer and a room. Nothing reusable. Costs scaled linearly with headcount. Built the business case, secured buy-in, designed 70+ digital modules, deployed through SuccessFactors LMS. Costs fell 40% permanently.</div></div>
-          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">&minus;40%</div><div class="kl">Training Cost</div></div><div><div class="kv">70+</div><div class="kl">Modules Built</div></div></div><div class="cs-more">Analysis <svg class="cs-arr" viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><polyline points="2,4 6,8 10,4"/></svg></div></div>
+          <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">&minus;40%</div><div class="kl">Training Cost</div></div><div><div class="kv">70+</div><div class="kl">Modules Built</div></div></div></div>
         </div>
         <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Training Cost per Starter - Index (100 = baseline)</div><div class="cc-ins">Cost dropped immediately after digital launch and continued falling. Saving compounds with every hire.</div><canvas id="c6a"></canvas></div><div class="cc"><div class="cc-lbl">Digital Modules Built - Running Total</div><div class="cc-ins">70+ permanent reusable assets built over 8 months. Each one reducing future delivery cost.</div><canvas id="c6b"></canvas></div></div></div>
         <div class="cs-at" onclick="tA('cs6')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
