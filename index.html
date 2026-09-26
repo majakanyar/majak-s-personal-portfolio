@@ -461,7 +461,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Healthcare</span><span class="cs-tag cs-tag-s">Fortune 500</span></div><div class="cs-title">Building empathy into frontline conversations: Healthcare</div><div class="cs-role">Role: Training Supervisor &middot; Teleperformance &middot; Oct 2022 &ndash; Apr 2024</div><div class="cs-hook">Agents resolving issues correctly but missing the emotional dimension of healthcare calls. Empathy-focused conversation practice was built from real calls in QA data.</div></div>
           <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">7&ndash;10%</div><div class="kl">CSAT</div></div></div></div>
         </div>
-        <div class="cs-charts"><div class="cc"><div class="cc-lbl">What changed</div><div class="cc-ins" style="margin-bottom:0;">Standard CX training wasn't built for the emotional stakes of healthcare calls. Empathy-focused conversation practice, drawn from real calls in QA data, was added to frontline training for this account. This contributed to CSAT rising 7 to 10 percent across programs.</div></div></div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">CSAT rose 7&ndash;10% across programs</div><canvas id="c3a"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div><div class="cc"><div class="cc-lbl">What changed</div><div class="cc-ins" style="margin-bottom:0;">Standard CX training wasn't built for the emotional stakes of healthcare calls. Empathy-focused conversation practice, drawn from real calls in QA data, was added to frontline training for this account. This contributed to CSAT rising 7 to 10 percent across programs.</div></div></div></div>
         <div class="cs-at" onclick="tA('cs3')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
         <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs3','story')">Story</button><button class="tab" onclick="swT('cs3','rca')">5 Whys</button><button class="tab" onclick="swT('cs3','cb')">Cost vs Benefit</button></div>
         <div class="tp on" id="cs3-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">Healthcare customers reaching the contact centre with emotionally charged situations. Agents resolving the administrative issue correctly but missing the emotional dimension. Complaints referenced feeling dismissed or rushed.</div></div><div><div class="sl">Approach</div><div class="st">Standard CX training frameworks were designed for retail and didn't account for the emotional stakes of healthcare. Empathy-focused conversation practice was built from real calls in QA data and embedded through role-play.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">Agents handled emotionally sensitive calls with more consistency. This contributed to CSAT rising 7 to 10 percent across programs on this account.</div></div></div></div>
@@ -877,6 +877,11 @@ const chartMarks={
       ctx.beginPath();ctx.moveTo(g.x0,g.y);ctx.lineTo(g.x1,g.y);ctx.stroke();
       ctx.setLineDash([]);
     });
+    (opts.bands||[]).forEach(b=>{
+      const g=b.get(chart);if(!g)return;
+      ctx.fillStyle=b.color||'rgba(196,98,45,.16)';
+      ctx.fillRect(g.x0,g.yTop,g.x1-g.x0,g.yBot-g.yTop);
+    });
     ctx.restore();
   }
 };
@@ -918,12 +923,12 @@ window.addEventListener('load',()=>{
                y:{min:90,max:135,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
   })();
 
-  // 03 US telecom - Conversion rose 10%: line chart with a dashed baseline
-  // reference at 100.
+  // 03 US telecom - Conversion rose 10%: vertical bars with a dashed
+  // baseline reference at 100.
   (()=>{
-    const labels=['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'];
-    const data=trendPath(12,100,110);
-    mk('c1a','line',{labels,datasets:[{data,borderColor:AC,backgroundColor:AB,tension:.4,pointRadius:1.5,pointBackgroundColor:AC,borderWidth:1.5,fill:true}]},
+    const labels=['Q1','Q2','Q3','Q4'];
+    const data=trendPath(4,100,110);
+    mk('c1a','bar',{labels,datasets:[{data,backgroundColor:data.map((v,i)=>i===data.length-1?AC:AL),borderWidth:0,maxBarThickness:34}]},
       {plugins:{legend:{display:false},tooltip:noValTT,
         chartLabels:{items:[
           {pos:c=>{const p=c.getDatasetMeta(0).data[0];return{x:p.x,y:p.y-10};},text:'100',color:'#7A5C4A',font:"600 10px Inter,system-ui,sans-serif"},
@@ -933,6 +938,22 @@ window.addEventListener('load',()=>{
         chartMarks:{dashedLines:[{get:c=>({x0:c.chartArea.left,x1:c.chartArea.right,y:c.scales.y.getPixelForValue(100)})}]}},
        scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},
                y:{min:90,max:115,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
+  })();
+
+  // 02 Healthcare - CSAT rose 7-10% across programs: line chart, ending in
+  // a shaded range band since the CV states a range, not a single number.
+  (()=>{
+    const labels=['Q1','Q2','Q3','Q4'];
+    const data=trendPath(4,100,108.5);
+    mk('c3a','line',{labels,datasets:[{data,borderColor:AC,backgroundColor:AB,tension:.4,pointRadius:2,pointBackgroundColor:AC,borderWidth:1.5,fill:true}]},
+      {plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label,label:c=>c.dataIndex===3?'+7–10%':''}},
+        chartLabels:{items:[
+          {pos:c=>{const p=c.getDatasetMeta(0).data[0];return{x:p.x,y:p.y-10};},text:'100',color:'#7A5C4A',font:"600 10px Inter,system-ui,sans-serif"},
+          {pos:c=>{const d=c.getDatasetMeta(0).data;const p=d[d.length-1];const y=c.scales.y.getPixelForValue(110);return{x:p.x,y:y-8};},text:'+7–10%',color:AC}
+        ]},
+        chartMarks:{bands:[{get:c=>{const d=c.getDatasetMeta(0).data;const p=d[d.length-1];return{x0:p.x-16,x1:p.x+16,yTop:c.scales.y.getPixelForValue(110),yBot:c.scales.y.getPixelForValue(107)};}}]}},
+       scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},
+               y:{min:95,max:112,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
   })();
 
   // 04 Scale-up - Attrition down 20%: vertical columns, descending.
