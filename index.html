@@ -147,6 +147,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .cc{background:var(--wh);border:1px solid var(--sd);padding:14px 14px 11px;}
 .cc-lbl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;}
 .cc-ins{font-size:11px;font-weight:500;color:var(--es);margin-bottom:8px;line-height:1.4;}
+.cc-trend{font-size:9px;color:var(--mu);opacity:.65;margin-top:6px;line-height:1.4;}
 .cc canvas{max-height:120px;}
 
 /* ANALYSIS TOGGLE - a real visible button, not a quiet text bar. The
@@ -434,7 +435,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
   <div class="sec-in cs-in">
     <div class="eye rev">Case Studies</div>
     <div class="sec-h rev">Six projects.<br>Measured results.</div>
-    <p class="rev" style="font-size:11px;color:var(--mu);margin:-24px 0 32px;max-width:640px;line-height:1.6;">Client data is confidential. Numbers shown are measured outcomes; charts are indexed to baseline so no raw client figures are disclosed.</p>
+    <p class="rev" style="font-size:11px;color:var(--mu);margin:-24px 0 32px;max-width:640px;line-height:1.6;">Client data is confidential. Start and end values are the reported results; trend lines between them are illustrative.</p>
     <div class="cs-list">
 
       <!-- CS2: Logistics CSAT -->
@@ -444,7 +445,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Global Logistics</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Market</span></div><div class="cs-title">Lifting CSAT 7&ndash;10% by fixing the post-training gap: Global logistics</div><div class="cs-role">Role: Training Supervisor &middot; Teleperformance &middot; Oct 2022 &ndash; Apr 2024</div><div class="cs-hook">Agents completing onboarding and arriving on the floor underprepared. CSAT below target, tool usage inconsistent. A new-hire coaching model was built and subsequently adopted globally by the client.</div></div>
           <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">7&ndash;10%</div><div class="kl">CSAT</div></div><div><div class="kv">+25%</div><div class="kl">Tool Usage</div></div><div><div class="kv">&minus;30s</div><div class="kl">AHT</div></div></div></div>
         </div>
-        <div class="cs-charts"><div class="cc"><div class="cc-lbl">Tool usage after the coaching model - Index (baseline = 100)</div><div class="cc-ins">CSAT also rose 7 to 10 percent and AHT fell 30 seconds.</div><canvas id="c2a"></canvas></div></div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">CSAT rose 7&ndash;10%</div><canvas id="c2a"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div><div class="cc"><div class="cc-lbl">Tool usage rose 25%</div><canvas id="c2b"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div></div><div class="cc-ins" style="margin:10px 2px 0;">AHT fell 30 seconds.</div></div>
         <div class="cs-at" onclick="tA('cs2')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
         <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs2','story')">Story</button><button class="tab" onclick="swT('cs2','rca')">5 Whys</button><button class="tab" onclick="swT('cs2','cb')">Cost vs Benefit</button></div>
         <div class="tp on" id="cs2-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">A global logistics operation with consistent CSAT pressure. Agents passing training but arriving on the floor underprepared. Tool usage inconsistent and CSAT underperforming. The standard diagnosis was more training. The actual problem was structural.</div></div><div><div class="sl">Approach</div><div class="st">Programme rebuilt around patterns extracted from live QA data. System navigation replicas built for practice. A new-hire coaching model introduced formal shared responsibility between training and operations - the first time these two functions shared accountability on this account.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">CSAT rose 7 to 10 percent. Tool usage increased 25%. AHT fell 30 seconds. The coaching model was adopted globally by the logistics client.</div></div></div></div>
@@ -483,7 +484,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
             <div class="cs-kpis"><div><div class="kv">+10%</div><div class="kl">Conversion</div></div><div><div class="kv">Extended</div><div class="kl">Scope</div></div></div>
           </div>
         </div>
-        <div class="cs-charts"><div class="cc"><div class="cc-lbl">Conversion after the redesign - Index (baseline = 100)</div><div class="cc-ins">The client extended scope.</div><canvas id="c1a"></canvas></div></div>
+        <div class="cs-charts"><div class="cc"><div class="cc-lbl">Conversion rose 10%</div><canvas id="c1a"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div><div class="cc-ins" style="margin:10px 2px 0;">The client extended scope.</div></div>
         <div class="cs-at" onclick="tA('cs1')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
         <div class="cs-panel">
           <div class="cs-pi">
@@ -503,7 +504,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">BPO Operations</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; North America Scale-Up</span></div><div class="cs-title">Onboarding 700 agents without hurting live performance: BPO scale-up</div><div class="cs-role">Role: Operations Training Manager &middot; Teleperformance &middot; Apr 2024 &ndash; Feb 2025</div><div class="cs-hook">The two largest US accounts scaled at once. 700 agents were onboarded with attrition down 20% and 94% nesting success.</div></div>
           <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">700</div><div class="kl">Onboarded</div></div><div><div class="kv">&minus;20%</div><div class="kl">Attrition</div></div><div><div class="kv">94%</div><div class="kl">Nesting Success</div></div></div></div>
         </div>
-        <div class="cs-charts"><div class="cc"><div class="cc-lbl">Attrition after the rebuild - Index (baseline = 100)</div><div class="cc-ins">700 agents onboarded. 94% nesting success.</div><canvas id="c4a"></canvas></div></div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Attrition down 20%</div><canvas id="c4a"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div><div class="cc"><div class="cc-lbl">94% nesting success</div><canvas id="c4b"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div></div><div class="cc-ins" style="margin:10px 2px 0;">700 agents onboarded.</div></div>
         <div class="cs-at" onclick="tA('cs4')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
         <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs4','story')">Story</button><button class="tab" onclick="swT('cs4','rca')">5 Whys</button><button class="tab" onclick="swT('cs4','cb')">Cost vs Benefit</button></div>
         <div class="tp on" id="cs4-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">The two largest US accounts scaled at the same time. The training system was already under pressure. Scaling it without fixing the foundations would have amplified every existing problem.</div></div><div><div class="sl">Approach</div><div class="st">Foundations rebuilt before scaling. Readiness checks identified at-risk individuals during training. Cross-functional review calls connected training, quality, recruitment and operations - formal shared accountability for the first time on these accounts.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">700 agents onboarded as the two largest US accounts scaled. Attrition fell 20%. Nesting success reached 94%.</div></div></div></div>
@@ -519,7 +520,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Operational Readiness</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Account</span></div><div class="cs-title">Cutting ramp time from 6 to 3.5 weeks: Speed to proficiency</div><div class="cs-role">Role: Operations Training Manager &middot; Teleperformance &middot; Apr 2024 &ndash; Feb 2025</div><div class="cs-hook">A 6-week programme was found to include content that wasn't being used on the floor. It was rebuilt around what new starters actually needed.</div></div>
           <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">6&rarr;3.5wk</div><div class="kl">Ramp Time</div></div><div><div class="kv">&minus;15%</div><div class="kl">Error Rate</div></div></div></div>
         </div>
-        <div class="cs-charts"><div class="cc"><div class="cc-lbl">Ramp time and error rate after the redesign - Index (baseline = 100)</div><div class="cc-ins">Ramp time fell from 6 to 3.5 weeks.</div><canvas id="c5a"></canvas></div></div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Ramp time fell from 6 to 3.5 weeks</div><canvas id="c5a"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div><div class="cc"><div class="cc-lbl">Error rate down 15%</div><canvas id="c5b"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div></div></div>
         <div class="cs-at" onclick="tA('cs5')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
         <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs5','story')">Story</button><button class="tab" onclick="swT('cs5','rca')">5 Whys</button><button class="tab" onclick="swT('cs5','cb')">Cost vs Benefit</button></div>
         <div class="tp on" id="cs5-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">A 6-week programme running unchanged for a long time. Nobody had measured its content against actual floor performance.</div></div><div><div class="sl">Approach</div><div class="st">Curriculum rebuilt backwards from what new starters actually did in their first weeks on the floor. Every module was traced to a specific on-floor behaviour. Micro-coaching during nesting prevented skill decay.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">Ramp time fell from 6 to 3.5 weeks. Error rate fell 15%. Adopted as the standard across accounts.</div></div></div></div>
@@ -535,7 +536,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
           <div class="cs-body"><div class="cs-tags"><span class="cs-tag">Business Transformation</span><span class="cs-tag cs-tag-s">Fortune 500 &middot; Multi-Account &middot; EMEA &amp; North America</span></div><div class="cs-title">Cutting training costs 40 to 50% by going digital: Classroom to eLearning</div><div class="cs-role">Role: Operations Training Manager &middot; Teleperformance &middot; Apr 2024 &ndash; Feb 2025</div><div class="cs-hook">Every session required a trainer and a room, with nothing reusable. Proposed the move to digital, wrote the business case, got sign-off and built 70+ modules.</div></div>
           <div class="cs-kpi-col"><div class="cs-kpis"><div><div class="kv">&minus;40&ndash;50%</div><div class="kl">Training Cost</div></div><div><div class="kv">70+</div><div class="kl">Modules Built</div></div></div></div>
         </div>
-        <div class="cs-charts"><div class="cc"><div class="cc-lbl">Training cost after going digital - Index (baseline = 100)</div><div class="cc-ins">70+ digital modules built.</div><canvas id="c6a"></canvas></div></div>
+        <div class="cs-charts"><div class="cg"><div class="cc"><div class="cc-lbl">Training costs down 40&ndash;50%</div><canvas id="c6a"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div><div class="cc"><div class="cc-lbl">70+ digital modules built</div><canvas id="c6b"></canvas><div class="cc-trend">Trend illustrative. Start and end values match reported results.</div></div></div></div>
         <div class="cs-at" onclick="tA('cs6')"><span class="cs-at-btn">View Full Analysis <span class="cs-at-arr">&darr;</span></span></div>
         <div class="cs-panel"><div class="cs-pi"><div class="tabs"><button class="tab on" onclick="swT('cs6','story')">Story</button><button class="tab" onclick="swT('cs6','rca')">5 Whys</button><button class="tab" onclick="swT('cs6','cb')">Cost vs Benefit</button></div>
         <div class="tp on" id="cs6-story"><div class="sg"><div><div class="sl">Challenge</div><div class="st">Every new starter needed a trainer's physical time and a room. Nothing was reusable. As headcount grew, the training cost base grew with it. Nobody had flagged this as a structural problem.</div></div><div><div class="sl">Approach</div><div class="st">Proposed the move from classroom to digital training, wrote the business case, and got operations and client sign-off. Built 70+ modules in Rise 360 and Articulate 360, deployed through SuccessFactors LMS with a train-the-trainer programme.</div></div><div><div class="sl">Outcome &amp; Business Impact</div><div class="st">Training costs fell 40 to 50%. A library of 70+ reusable digital modules was built. The operation could grow headcount without growing the training cost base at the same rate.</div></div></div></div>
@@ -824,16 +825,96 @@ const cntObs=new IntersectionObserver(entries=>{
 },{threshold:.4});
 const mc=document.querySelector('.mcard');if(mc)cntObs.observe(mc);
 
-function idxChart(id,labels,after_){
-  mk(id,'bar',{labels,datasets:[{label:'Before',data:labels.map(()=>100),backgroundColor:'rgba(122,92,74,.14)',borderWidth:0},{label:'After',data:after_,backgroundColor:AC,borderWidth:0}]},{plugins:{tooltip:{...TT,callbacks:{label:c=>c.dataset.label+': '+(c.raw===100?'Baseline':(c.raw>100?'+':'')+(c.raw-100)+'%')}}},scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},y:{title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{font:F,color:'#7A5C4A',callback:v=>v===100?'Base':v},grid:NG,border:{display:false}}}});
+// Smooth illustrative path from start to end: eased, with one short flat
+// stretch near the midpoint so it reads as steady progress rather than a
+// straight ramp - never a spike, never a dip. Only the first and last
+// values are ever labelled or shown; everything in between is unlabelled.
+function trendPath(n,start,end){
+  const pts=[];
+  for(let i=0;i<n;i++){
+    const t=i/(n-1);
+    const e=t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+    pts.push(start+(end-start)*e);
+  }
+  const flat=Math.floor(n*0.55);
+  if(flat+1<n-1)pts[flat+1]=pts[flat];
+  return pts;
+}
+
+const finalLabel={
+  id:'finalLabel',
+  afterDatasetsDraw(chart,args,opts){
+    if(!opts)return;
+    const {ctx}=chart;const meta=chart.getDatasetMeta(0);
+    ctx.save();ctx.textAlign='center';
+    if(opts.type==='band'){
+      const y=chart.scales.y,x=chart.scales.x;
+      const n=meta.data.length;
+      const x0=x.getPixelForValue(Math.max(0,n-1-opts.bandSpan));
+      const x1=chart.chartArea.right;
+      const yTop=y.getPixelForValue(opts.bandHigh);
+      const yBot=y.getPixelForValue(opts.bandLow);
+      ctx.fillStyle='rgba(196,98,45,.16)';
+      ctx.fillRect(x0,yTop,x1-x0,yBot-yTop);
+      ctx.fillStyle='#C4622D';ctx.font="700 11px Inter,system-ui,sans-serif";
+      ctx.fillText(opts.bandLabel,(x0+x1)/2,yTop-6);
+      if(opts.firstLabel){
+        const p0=meta.data[0];
+        ctx.fillStyle='#7A5C4A';ctx.font="600 10px Inter,system-ui,sans-serif";
+        ctx.fillText(opts.firstLabel,p0.x,p0.y-10);
+      }
+    } else {
+      if(opts.firstLabel){
+        const p0=meta.data[0];
+        ctx.fillStyle='#7A5C4A';ctx.font="600 10px Inter,system-ui,sans-serif";
+        ctx.fillText(opts.firstLabel,p0.x,p0.y-10);
+      }
+      if(opts.lastLabel){
+        const pL=meta.data[meta.data.length-1];
+        ctx.fillStyle='#C4622D';ctx.font="700 11px Inter,system-ui,sans-serif";
+        ctx.fillText(opts.lastLabel,pL.x,pL.y-10);
+      }
+    }
+    ctx.restore();
+  }
+};
+Chart.register(finalLabel);
+
+// Every in-between tooltip shows the period name only, never a value.
+const noValTT={...TT,callbacks:{title:c=>c[0].label,label:()=>''}};
+
+function trendChart(id,labels,start,end,finalLabelOpts,yTitle){
+  const data=trendPath(labels.length,start,end);
+  mk(id,'line',{labels,datasets:[{data,borderColor:AC,backgroundColor:AB,tension:.4,pointRadius:2,pointBackgroundColor:AC,borderWidth:1.5,fill:true}]},
+    {plugins:{legend:{display:false},tooltip:noValTT,finalLabel:finalLabelOpts},
+     scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},
+             y:{title:{display:!!yTitle,text:yTitle||'',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
 }
 
 window.addEventListener('load',()=>{
-  idxChart('c1a',['Conversion'],[110]);
-  idxChart('c2a',['Tool usage'],[125]);
-  idxChart('c4a',['Attrition'],[80]);
-  idxChart('c5a',['Ramp time','Error rate'],[58,85]);
-  idxChart('c6a',['Training cost'],[55]);
+  // 01 Global logistics
+  trendChart('c2a',['M1','M2','M3','M4','M5','M6'],0,8.5,
+    {type:'band',bandSpan:1.5,bandLow:7,bandHigh:10,bandLabel:'+7–10%',firstLabel:'0'});
+  trendChart('c2b',['M1','M2','M3','M4','M5','M6'],100,125,
+    {firstLabel:'100',lastLabel:'125'},'Index (baseline = 100)');
+  // 03 US telecom
+  trendChart('c1a',['W1','W2','W3','W4','W5','W6','W7','W8','W9','W10','W11','W12'],100,110,
+    {firstLabel:'100',lastLabel:'110'},'Index (baseline = 100)');
+  // 04 BPO scale-up
+  trendChart('c4a',['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10'],100,80,
+    {firstLabel:'100',lastLabel:'80'},'Index (baseline = 100)');
+  trendChart('c4b',['G1','G2','G3','G4','G5','G6','G7','G8'],70,94,
+    {lastLabel:'94%'},'Nesting pass rate (%)');
+  // 05 Speed to proficiency
+  trendChart('c5a',['C1','C2','C3','C4'],6.0,3.5,
+    {firstLabel:'6.0',lastLabel:'3.5'},'Weeks to full performance');
+  trendChart('c5b',['M1','M2','M3','M4','M5','M6'],100,85,
+    {firstLabel:'100',lastLabel:'85'},'Index (baseline = 100)');
+  // 06 Digital transformation
+  trendChart('c6a',['Pre','Q1','Q2','Q3','Q4'],100,55,
+    {type:'band',bandSpan:1.5,bandLow:50,bandHigh:60,bandLabel:'-40–50%',firstLabel:'100'});
+  trendChart('c6b',['M1','M2','M3','M4','M5','M6','M7','M8'],0,70,
+    {firstLabel:'0',lastLabel:'70+'},'Cumulative modules');
 });
 
 function lazyC(id){}
