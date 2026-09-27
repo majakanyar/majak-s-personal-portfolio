@@ -59,6 +59,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .nav-cta{background:var(--tc)!important;color:#fff!important;padding:8px 20px;font-size:11px!important;font-weight:600!important;letter-spacing:.08em;text-transform:uppercase;border-radius:0;}
 .nav-cta::after{display:none!important;}
 .nav-cta:hover{background:var(--tl)!important;}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:32px;height:32px;background:none;border:none;padding:0;cursor:none;}
+.nav-toggle span{display:block;width:22px;height:2px;background:var(--es);transition:transform .25s ease,opacity .25s ease;}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
 
 /* HERO */
 .hero{min-height:100vh;display:grid;grid-template-columns:1fr 480px;padding-top:54px;}
@@ -94,7 +99,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
    instead of a line-per-column look. minmax(0,1fr) (not plain 1fr) keeps
    columns from expanding past the card to fit a cell's min-content width. */
 .m-cell{padding:20px 18px 18px;position:relative;min-width:0;}
-.m-num{font-family:var(--sf);font-size:26px;font-weight:700;color:var(--tc);line-height:1;margin-bottom:5px;min-height:32px;}
+.m-num{font-family:var(--sf);font-size:26px;font-weight:700;color:var(--tc);line-height:1;margin-bottom:5px;min-height:32px;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1;}
 .m-lbl{font-size:11px;font-weight:600;color:var(--es);margin-bottom:3px;line-height:1.25;}
 .m-sub{font-size:10px;color:var(--mu);line-height:1.4;}
 
@@ -138,7 +143,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .cs-role{font-size:10px;font-weight:600;letter-spacing:.04em;color:var(--mu);margin-bottom:6px;}
 .cs-kpi-col{padding:22px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-end;}
 .cs-kpis{display:flex;flex-direction:column;gap:10px;align-items:flex-end;}
-.kv{font-family:var(--sf);font-size:19px;font-weight:700;color:var(--tc);line-height:1;}
+.kv{font-family:var(--sf);font-size:19px;font-weight:700;color:var(--tc);line-height:1;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1;}
 .kl{font-size:9px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--mu);margin-top:3px;}
 
 /* CHARTS always visible */
@@ -148,7 +153,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(250,247,242,
 .cc-lbl{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--mu);margin-bottom:3px;}
 .cc-ins{font-size:11px;font-weight:500;color:var(--es);margin-bottom:8px;line-height:1.4;}
 .cc-trend{font-size:9px;color:var(--mu);opacity:.65;margin-top:6px;line-height:1.4;}
-.cc canvas{max-height:120px;}
+.cc canvas{max-height:120px;font-variant-numeric:lining-nums tabular-nums;font-feature-settings:"lnum" 1,"tnum" 1;}
 
 /* ANALYSIS TOGGLE - a real visible button, not a quiet text bar. The
    previous version was a thin uppercase label + tiny arrow blended into
@@ -307,6 +312,17 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
   .sec-in,.cs-in,.con-in{padding-left:24px;padding-right:24px;}
   footer{padding:14px 24px;flex-direction:column;gap:7px;}
 }
+
+@media(max-width:768px){
+  .nav-in{padding:0 20px;}
+  .nav-toggle{display:flex;}
+  .nav-links{position:fixed;top:54px;left:0;right:0;background:var(--wh);flex-direction:column;align-items:stretch;gap:0;max-height:0;overflow:hidden;border-bottom:1px solid var(--sd);transition:max-height .3s ease;}
+  .nav-links.open{max-height:340px;}
+  .nav-links li{width:100%;}
+  .nav-links a{display:block;padding:16px 20px;width:100%;}
+  .nav-links a::after{display:none;}
+  .nav-cta{display:block;margin:8px 20px;text-align:center;}
+}
 </style>
 </head>
 <body>
@@ -319,7 +335,10 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
 <nav>
   <div class="nav-in">
     <a href="#top" class="nav-logo">Majak <span>Anyar</span></a>
-    <ul class="nav-links">
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
       <li><a href="#cases" data-s="cases">Case Studies</a></li>
       <li><a href="#aoe" data-s="aoe">Expertise</a></li>
       <li><a href="#tl" data-s="tl">Experience</a></li>
@@ -387,7 +406,7 @@ footer{background:var(--es);border-top:1px solid rgba(232,213,188,.07);padding:1
           <div class="m-sub">Attrition down 20%</div>
         </div>
         <div class="m-cell">
-          <div class="m-num" data-static="40&ndash;50%" style="font-size:22px;">40&ndash;50%</div>
+          <div class="m-num" data-static="40&ndash;50%" style="font-size:22px;white-space:nowrap;">40&ndash;50%</div>
           <div class="m-lbl">Training Cost Reduction</div>
           <div class="m-sub">Classroom to digital</div>
         </div>
@@ -770,6 +789,20 @@ const navObs=new IntersectionObserver(entries=>{
   });
 },{threshold:.25});
 ['cases','aoe','tl','about','contact'].forEach(id=>{const el=document.getElementById(id);if(el)navObs.observe(el);});
+
+const navToggle=document.getElementById('navToggle'),navLinksEl=document.getElementById('navLinks');
+if(navToggle&&navLinksEl){
+  navToggle.addEventListener('click',()=>{
+    const open=navLinksEl.classList.toggle('open');
+    navToggle.classList.toggle('open',open);
+    navToggle.setAttribute('aria-expanded',open?'true':'false');
+  });
+  navLinksEl.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+    navLinksEl.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded','false');
+  }));
+}
 
 function tP(id){
   const el=document.getElementById(id);
