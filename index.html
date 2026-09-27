@@ -882,6 +882,24 @@ const chartMarks={
       ctx.fillStyle=b.color||'rgba(196,98,45,.16)';
       ctx.fillRect(g.x0,g.yTop,g.x1-g.x0,g.yBot-g.yTop);
     });
+    // A dotted vertical marker for when the initiative launched, with its
+    // label rotated to fit the chart's limited height.
+    (opts.vLines||[]).forEach(v=>{
+      const g=v.get(chart);if(!g)return;
+      ctx.setLineDash([2,3]);ctx.strokeStyle=v.color||'rgba(122,92,74,.55)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(g.x,chart.chartArea.top+2);ctx.lineTo(g.x,chart.chartArea.bottom);ctx.stroke();
+      ctx.setLineDash([]);
+      if(v.label){
+        ctx.save();
+        ctx.translate(g.x-6,chart.chartArea.top+2);
+        ctx.rotate(-Math.PI/2);
+        ctx.textAlign='left';ctx.textBaseline='bottom';
+        ctx.fillStyle=v.color||'rgba(122,92,74,.75)';
+        ctx.font="600 8px Inter,system-ui,sans-serif";
+        ctx.fillText(v.label,0,0);
+        ctx.restore();
+      }
+    });
     ctx.restore();
   }
 };
@@ -909,16 +927,20 @@ window.addEventListener('load',()=>{
                y:{min:90,max:115,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
   })();
 
-  // 01 Logistics - Tool usage rose 25%: area chart.
+  // 01 Logistics - Tool usage rose 25%: area chart. A small dip right after
+  // launch (agents still adjusting to the new coaching model) before the
+  // steady climb to the CV figure.
   (()=>{
     const labels=['M1','M2','M3','M4','M5','M6'];
-    const data=trendPath(6,100,125);
+    const data=[100,97,103,112,120,125];
     mk('c2b','line',{labels,datasets:[{data,borderColor:AC,backgroundColor:AB,tension:.4,pointRadius:2,pointBackgroundColor:AC,borderWidth:1.5,fill:true}]},
-      {plugins:{legend:{display:false},tooltip:noValTT,
+      {layout:{padding:{top:36}},
+       plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label,label:()=>'',afterBody:c=>c[0].dataIndex===1?['Agents were still adjusting to the new coaching model.']:[]}},
         chartLabels:{items:[
           {pos:c=>{const p=c.getDatasetMeta(0).data[0];return{x:p.x,y:p.y-10};},text:'100',color:'#7A5C4A',font:"600 10px Inter,system-ui,sans-serif"},
           {pos:c=>{const d=c.getDatasetMeta(0).data;const p=d[d.length-1];return{x:p.x,y:p.y-10};},text:'125',color:AC}
-        ]}},
+        ]},
+        chartMarks:{vLines:[{get:c=>{const x0=c.scales.x.getPixelForValue(0),x1=c.scales.x.getPixelForValue(1);return{x:(x0+x1)/2};},label:'Initiative launched'}]}},
        scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},
                y:{min:90,max:135,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
   })();
@@ -956,18 +978,22 @@ window.addEventListener('load',()=>{
                y:{min:95,max:112,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
   })();
 
-  // 04 Scale-up - Attrition down 20%: vertical columns, descending.
+  // 04 Scale-up - Attrition down 20%: vertical columns, descending. A small
+  // uptick right after launch (the second account's onboarding wave
+  // overlapped with the first) before attrition steadily improves.
   (()=>{
     const labels=['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10'];
-    const data=trendPath(10,100,80);
+    const data=[100,104,98,93,90,87,85,83,81,80];
     mk('c4a','bar',{labels,datasets:[{data,backgroundColor:data.map((v,i)=>i===data.length-1?AC:AL),borderWidth:0,maxBarThickness:22}]},
-      {plugins:{legend:{display:false},tooltip:noValTT,
+      {layout:{padding:{top:36}},
+       plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label,label:()=>'',afterBody:c=>c[0].dataIndex===1?['The second account\'s onboarding wave overlapped with the first.']:[]}},
         chartLabels:{items:[
           {pos:c=>{const p=c.getDatasetMeta(0).data[0];return{x:p.x,y:p.y-8};},text:'100',color:'#7A5C4A',font:"600 10px Inter,system-ui,sans-serif"},
           {pos:c=>{const d=c.getDatasetMeta(0).data;const p=d[d.length-1];return{x:p.x,y:p.y-8};},text:'80',color:AC}
-        ]}},
+        ]},
+        chartMarks:{vLines:[{get:c=>{const x0=c.scales.x.getPixelForValue(0),x1=c.scales.x.getPixelForValue(1);return{x:(x0+x1)/2};},label:'Initiative launched'}]}},
        scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},
-               y:{min:60,max:105,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
+               y:{min:60,max:110,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
   })();
 
   // 04 Scale-up - 94% nesting success: horizontal bars, longer toward G8.
@@ -999,18 +1025,22 @@ window.addEventListener('load',()=>{
                y:{min:0,max:7,title:{display:true,text:'Weeks',font:F,color:'#7A5C4A'},ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}}}});
   })();
 
-  // 05 Speed to proficiency - Error rate down 15%: vertical columns.
+  // 05 Speed to proficiency - Error rate down 15%: vertical columns. A
+  // small uptick right after launch (the new curriculum was still being
+  // rolled out to all trainers) before error rate steadily improves.
   (()=>{
     const labels=['M1','M2','M3','M4','M5','M6'];
-    const data=trendPath(6,100,85);
+    const data=[100,103,96,91,87,85];
     mk('c5b','bar',{labels,datasets:[{data,backgroundColor:data.map((v,i)=>i===data.length-1?AC:AL),borderWidth:0,maxBarThickness:34}]},
-      {plugins:{legend:{display:false},tooltip:noValTT,
+      {layout:{padding:{top:36}},
+       plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label,label:()=>'',afterBody:c=>c[0].dataIndex===1?['The new curriculum was still being rolled out to all trainers.']:[]}},
         chartLabels:{items:[
           {pos:c=>{const p=c.getDatasetMeta(0).data[0];return{x:p.x,y:p.y-8};},text:'100',color:'#7A5C4A',font:"600 10px Inter,system-ui,sans-serif"},
           {pos:c=>{const d=c.getDatasetMeta(0).data;const p=d[d.length-1];return{x:p.x,y:p.y-8};},text:'85',color:AC}
-        ]}},
+        ]},
+        chartMarks:{vLines:[{get:c=>{const x0=c.scales.x.getPixelForValue(0),x1=c.scales.x.getPixelForValue(1);return{x:(x0+x1)/2};},label:'Initiative launched'}]}},
        scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},
-               y:{min:60,max:105,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
+               y:{min:60,max:110,title:{display:true,text:'Index (baseline = 100)',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
   })();
 
   // 06 Digital transformation - Training costs down 40-50%: waterfall.
@@ -1030,17 +1060,21 @@ window.addEventListener('load',()=>{
   })();
 
   // 06 Digital transformation - 70+ digital modules built: cumulative area.
+  // A cumulative count can't fall, so instead of a dip there is a brief flat
+  // stretch right after launch (build paused for stakeholder review).
   (()=>{
     const labels=['M1','M2','M3','M4','M5','M6','M7','M8'];
-    const data=trendPath(8,0,70);
+    const data=[0,8,8,20,35,50,62,70];
     mk('c6b','line',{labels,datasets:[{data,borderColor:AC,backgroundColor:AB,tension:.4,pointRadius:2,pointBackgroundColor:AC,borderWidth:1.5,fill:true}]},
-      {plugins:{legend:{display:false},tooltip:noValTT,
+      {layout:{padding:{top:36}},
+       plugins:{legend:{display:false},tooltip:{...TT,callbacks:{title:c=>c[0].label,label:()=>'',afterBody:c=>c[0].dataIndex===2?['Build paused briefly for stakeholder review.']:[]}},
         chartLabels:{items:[
           {pos:c=>{const p=c.getDatasetMeta(0).data[0];return{x:p.x,y:p.y-10};},text:'0',color:'#7A5C4A',font:"600 10px Inter,system-ui,sans-serif"},
           {pos:c=>{const d=c.getDatasetMeta(0).data;const p=d[d.length-1];return{x:p.x,y:p.y-10};},text:'70+',color:AC}
-        ]}},
+        ]},
+        chartMarks:{vLines:[{get:c=>{const x0=c.scales.x.getPixelForValue(0),x1=c.scales.x.getPixelForValue(1);return{x:(x0+x1)/2};},label:'Initiative launched'}]}},
        scales:{x:{ticks:{font:F,color:'#7A5C4A'},grid:NG,border:{display:false}},
-               y:{min:0,max:80,title:{display:true,text:'Cumulative modules',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
+               y:{min:0,max:85,title:{display:true,text:'Cumulative modules',font:F,color:'#7A5C4A'},ticks:{display:false},grid:NG,border:{display:false}}}});
   })();
 
 });
